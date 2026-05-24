@@ -1,7 +1,7 @@
 import os
 from groq import Groq
 from dotenv import load_dotenv
-from utils.prompts import SYSTEM_PROMPT, get_interpretation_prompt, get_direct_consultation_prompt
+from prompts import SYSTEM_PROMPT, get_interpretation_prompt, get_direct_consultation_prompt
 
 # Load environment variables from .env file
 load_dotenv()
