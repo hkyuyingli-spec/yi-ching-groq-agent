@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 # Load environment variables
 load_dotenv()
 
-from core.iching_core import IChingCore
+from iching_core import IChingCore
 from core.interpreter import IChingInterpreter
 
 # Page Configuration
