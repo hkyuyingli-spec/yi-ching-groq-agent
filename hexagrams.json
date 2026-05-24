@@ -1,0 +1,1091 @@
+{
+  "1": {
+    "number": 1,
+    "name": "Qian",
+    "english": "The Creative",
+    "chinese": "乾",
+    "upper": "☰",
+    "lower": "☰",
+    "judgment": "Sublime success. Perseverance furthers.",
+    "image": "The movement of heaven is full of power. Thus the superior person makes himself strong and untiring.",
+    "keywords": [
+      "strength",
+      "leadership",
+      "creation",
+      "initiative"
+    ],
+    "tcm": "Strong Yang energy. Supports vitality, Lung and Heart Qi."
+  },
+  "2": {
+    "number": 2,
+    "name": "Kun",
+    "english": "The Receptive",
+    "chinese": "坤",
+    "upper": "☷",
+    "lower": "☷",
+    "judgment": "Sublime success through devotion.",
+    "image": "The earth's condition is receptive devotion.",
+    "keywords": [
+      "receptivity",
+      "nurturing",
+      "yielding",
+      "support"
+    ],
+    "tcm": "Strong Yin energy. Supports Spleen and Stomach for nourishment and stability."
+  },
+  "3": {
+    "number": 3,
+    "name": "Chiür (Chü)",
+    "english": "Beginning",
+    "chinese": "安",
+    "upper": "♀",
+    "lower": "♁",
+    "judgment": "The beginning comes when a man has projected himself in some way and finds himself at the beginning of a new condition. This beginning contains the potential of all that comes later, and it is the source of all the things that follow.",
+    "image": "The first six lines form the trigram of the Creative at the top over the trigram of the Receptive at the bottom. This hexagram is the source of all things that occur in the six lines that follow.",
+    "keywords": [
+      "new beginnings",
+      "potential",
+      "source"
+    ],
+    "tcm": "Associated with the Liver Meridian and the Wood element, representing growth and renewal."
+  },
+  "4": {
+    "number": 4,
+    "name": "Meng (Méng)",
+    "english": "Youthful Folly",
+    "chinese": "张",
+    "upper": "♀",
+    "lower": "♁",
+    "judgment": "Youthful Folly. Success. The youth must be in his place. The old man must leave his place. The course of life is determined by the time of birth. The individual has no control over it. Therefore, it is not for him to decide whether he shall be in his place or not. He must be in his place, and he must be obedient to the time.",
+    "image": "The wind blows over the lake.",
+    "keywords": [
+      "youth",
+      "folly",
+      "obedience",
+      "time"
+    ],
+    "tcm": "Kidney energy, associated with the Water element, and the emotions of fear and anxiety."
+  },
+  "5": {
+    "number": 5,
+    "name": "Xu (Xúu)",
+    "english": "Waiting",
+    "chinese": "很",
+    "upper": "♂",
+    "lower": "♁",
+    "judgment": "Waiting for a time of fulfillment. It furthers one to see the great man. Success.",
+    "image": "Waiting for the flower to bloom.",
+    "keywords": [
+      "waiting",
+      "patience",
+      "fulfillment",
+      "great man"
+    ],
+    "tcm": "Associated with the Kidney and Water element, representing receptivity and storage."
+  },
+  "6": {
+    "number": 6,
+    "name": "Sung (Sung)",
+    "english": "Conflict",
+    "chinese": "尿",
+    "upper": "♀♀♀",
+    "lower": "♀♀♀",
+    "judgment": "Conflict is the root of all harm. If you are in conflict, you must be cautious and not let your emotions get the better of you. Be patient and wait for the right moment to act.",
+    "image": "A man is in conflict with his friend. He is in a difficult position and must be careful not to make things worse.",
+    "keywords": [
+      "Conflict",
+      "Argument",
+      "Disagreement",
+      "Tension"
+    ],
+    "tcm": "Associated with the Liver Meridian, representing conflict and tension."
+  },
+  "7": {
+    "number": 7,
+    "name": "shì",
+    "english": "The Army",
+    "chinese": "師",
+    "upper": "☰",
+    "lower": "☱",
+    "judgment": "The army has caused confusion in the field. If you are in a position of authority, you must be cautious and considerate in your actions, lest you cause unnecessary conflict. If you are not in a position of authority, you must be patient and wait for the right moment to act.",
+    "image": "The army is in disarray, with soldiers running in all directions. This is a sign of chaos and disorder.",
+    "keywords": [
+      "chaos",
+      "disorder",
+      "confusion",
+      "caution",
+      "patience"
+    ],
+    "tcm": "Association with the Wood element, representing growth and expansion."
+  },
+  "8": {
+    "number": 8,
+    "name": "Pi (bì)",
+    "english": "Maintaining",
+    "chinese": "比",
+    "upper": "☰",
+    "lower": "☱",
+    "judgment": "The superior man is modest in his speech, but exceeds in his actions.",
+    "image": "A mountain under heaven; the lake rests upon it.",
+    "keywords": [
+      "modesty",
+      "excess",
+      "mountain",
+      "lake"
+    ],
+    "tcm": "Associated with the Water element, Kidney and Bladder meridians, and the emotions of fear and anxiety."
+  },
+  "9": {
+    "number": 9,
+    "name": "Hui (Huí)",
+    "english": "Revolution",
+    "chinese": "回",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "Revolution. The thunder below stirs up the earth, and the thunder above sters up the heaven. The image is: thunder in the earth, thunder in the heaven. The superior man understands the application of the right measure, and carries out the laws of the celestial bodies.",
+    "image": "Thunder in the earth, thunder in the heaven. The superior man understands the application of the right measure, and carries out the laws of the celestial bodies.",
+    "keywords": [
+      "revolution",
+      "change",
+      "upheaval",
+      "chaos"
+    ],
+    "tcm": "Associated with the Liver Meridian and the Wood element, representing change and revolution in the body and life."
+  },
+  "10": {
+    "number": 10,
+    "name": "Lié (Lî)",
+    "english": "Treading (or Walking)",
+    "chinese": "小",
+    "upper": "阇",
+    "lower": "不",
+    "judgment": "Treading indicates progress and achievement. It is advantageous to be persevering.",
+    "image": "A man treads on the back of a tiger.",
+    "keywords": [
+      "progress",
+      "achievement",
+      "perseverance"
+    ],
+    "tcm": "Associated with the Fire element and the Heart and Small Intestine meridians."
+  },
+  "11": {
+    "number": 11,
+    "name": "Si Gua",
+    "english": "Peace",
+    "chinese": "很",
+    "upper": "阇阇阇",
+    "lower": "阇阇阇",
+    "judgment": "Peace. Success.",
+    "image": "The lake has become a sea. The joyous, thriving, will be successful and free from danger.",
+    "keywords": [
+      "peace",
+      "success",
+      "freedom",
+      "danger"
+    ],
+    "tcm": "Associated with the Heart and Small Intestine meridians, representing balance and harmony."
+  },
+  "12": {
+    "number": 12,
+    "name": "Pigua",
+    "english": "Stimulating",
+    "chinese": "破",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "The stimulus of movement. The movement of the superior man escapes injury; The inferior man comes to grief.",
+    "image": "A storm, movement, injury.",
+    "keywords": [
+      "movement",
+      "stimulus",
+      "injury",
+      "superior"
+    ],
+    "tcm": "Associated with the Liver Meridian and the Wood element, representing movement and change."
+  },
+  "13": {
+    "number": 13,
+    "name": "Jiehou",
+    "english": "Joining Together",
+    "chinese": "很为",
+    "upper": "三中",
+    "lower": "主中",
+    "judgment": "When the time for action arrives, action by itself is not enough. The thing to do is to put one's self in proper relation to the occasion.",
+    "image": "A double line, the lower one of which is strong, the upper one weak, forms the hexagram of joining together. It indicates association, union, and friendship.",
+    "keywords": [
+      "union",
+      "association",
+      "friendship",
+      "cooperation"
+    ],
+    "tcm": "Association with others to achieve harmony and balance."
+  },
+  "14": {
+    "number": 14,
+    "name": "Ta Chuang",
+    "english": "Great Possession",
+    "chinese": "大有",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "The great man, by his mastery of himself, is able to care for the people.\nHe is generous and not proud, but he is also just and not too generous.",
+    "image": "The king, in his great possession, is generous and not proud, but he is also just and not too generous.",
+    "keywords": [
+      "generosity",
+      "moderation",
+      "self-mastery",
+      "care"
+    ],
+    "tcm": "Associated with the Kidney and Water element, representing receptivity and storage."
+  },
+  "15": {
+    "number": 15,
+    "name": "Zhen (Zhēn)",
+    "english": "Modesty",
+    "chinese": "震",
+    "upper": "☰",
+    "lower": "☱",
+    "judgment": "Modesty brings good fortune. The small never oversteps the great.",
+    "image": "The small, the great, the model, the noble, the yielding, the firm, the model, the noble, the yielding, the firm",
+    "keywords": [
+      "modesty",
+      "yielding",
+      "firm",
+      "model",
+      "noble"
+    ],
+    "tcm": "Associated with the Kidney and Water element, representing receptivity and flexibility."
+  },
+  "17": {
+    "number": 17,
+    "name": "Sui Gua",
+    "english": "Following After",
+    "chinese": "小小",
+    "upper": "主五",
+    "lower": "小小",
+    "judgment": "Following after. Success. Perseverance furthers.",
+    "image": "A man in a state of watchful waiting.",
+    "keywords": [
+      "perseverance",
+      "success",
+      "waiting",
+      "patience"
+    ],
+    "tcm": "Associated with the Kidney and Water element, representing receptivity and storage."
+  },
+  "18": {
+    "number": 18,
+    "name": "Kuñüluñg",
+    "english": "Degradation",
+    "chinese": "小小",
+    "upper": "三二",
+    "lower": "三二",
+    "judgment": "Degradation. Misfortune.\nIf you are sincere, you have success.\n",
+    "image": "A broken line above a broken line.\nA broken line above a broken line.",
+    "keywords": [
+      "Degradation",
+      "Misfortune",
+      "Sincerity",
+      "Success"
+    ],
+    "tcm": "Associated with the Kidney and Water element, representing receptivity and storage."
+  },
+  "19": {
+    "number": 19,
+    "name": "Lin (Lín)",
+    "english": "Approaching",
+    "chinese": "林",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "Approach has in itself something oppressive, and that which is thus approached may become frightened and flee. In all actions a certain reserve is necessary.",
+    "image": "The lake has risen up to the mountains, and all the valleys are filled with water. The lake is not yet overflowing, but it is so full that the water from the lake flows over and the valleys are filled.",
+    "keywords": [
+      "reserve",
+      "caution",
+      "approach",
+      "oppression"
+    ],
+    "tcm": "Associated with the Water element, Kidney and Bladder meridians, and the emotions of fear and anxiety."
+  },
+  "20": {
+    "number": 20,
+    "name": "Jian (,",
+    "english": "View",
+    "chinese": "見",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "View. It does not further the undertaking. It fully develops the danger. In taking an action, it must be remembered that all actions have their opposite. Success.",
+    "image": "The hexagram ☰☵ is the mountain over water. The mountain is the symbol of the strong, steady character, and the trigram ☵ represents the dark, receptive, and yielding principle. The image therefore shows a strong, steady character yielding to the dark, receptive, and yielding principle.",
+    "keywords": [
+      "view",
+      "opposite",
+      "danger",
+      "success"
+    ],
+    "tcm": "Associated with the Water element, the Kidney and Bladder meridians, and the emotions of fear and anxiety."
+  },
+  "21": {
+    "number": 21,
+    "name": "Shi He (Shì Hé)",
+    "english": "Humility, The Army",
+    "chinese": "很席",
+    "upper": "阇三",
+    "lower": "三阇",
+    "judgment": "Humility brings good fortune. If you are sincere, you have success in your struggle. Perseverance brings good fortune.",
+    "image": "A king offers a sacrifice to the God of the West. He goes to the end of the earth, to the south, to the mountain, to the sea, and to the great wind.",
+    "keywords": [
+      "humility",
+      "sincerity",
+      "perseverance",
+      "success"
+    ],
+    "tcm": "Associated with the Kidney and Water element, humility is linked to the concept of receptivity and yielding."
+  },
+  "22": {
+    "number": 22,
+    "name": "Bì Xīng",
+    "english": "Grace Before Eating",
+    "chinese": "比",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "Grace before eating brings good fortune. It furthers one to provide for an army at the right time and in the right way.",
+    "image": "The light of the superior man awaits the first signs of decision at the throne.",
+    "keywords": [
+      "grace",
+      "eating",
+      "provision",
+      "decision"
+    ],
+    "tcm": "Associated with the Spleen and Stomach meridians, and the concept of nourishment and digestion."
+  },
+  "23": {
+    "number": 23,
+    "name": "Bo (Pinyin)",
+    "english": "Return",
+    "chinese": "小",
+    "upper": "三五",
+    "lower": "五五",
+    "judgment": "Return, the weak and the strong, the noble and the humble, all return to their proper places. The return is a return to the natural order of things. It is a return to the way things should be.",
+    "image": "The return is a return to the natural order of things. It is a return to the way things should be.",
+    "keywords": [
+      "return",
+      "reversal",
+      "change",
+      "cycle"
+    ],
+    "tcm": "Associated with the Kidney and Water element, representing receptivity, storage, and nourishment."
+  },
+  "24": {
+    "number": 24,
+    "name": "Fēng",
+    "english": "Return (Not Yet Fulfilled)",
+    "chinese": "風",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "Return without coming to the throne; it must be done through the agency of others. Thus too, the superior man does not play the part of a sage, but helps others to be one.",
+    "image": "A wind stirs the rain, and the clouds disperse.",
+    "keywords": [
+      "return",
+      "not yet fulfilled",
+      "helping others",
+      "agency of others"
+    ],
+    "tcm": "Wind, associated with the Lung and Large Intestine meridians, and the Metal element."
+  },
+  "25": {
+    "number": 25,
+    "name": "Wu Wang",
+    "english": "The Non-Acting",
+    "chinese": "不往",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "The hexagram of the non-acting is the one of the return. It is the return to the natural order of things. The return is the way of the Tao. The non-acting is the way of the Tao. The return is the way of the Tao. The non-acting is the way of the Tao.",
+    "image": "The non-acting is the way of the Tao. The return is the way of the Tao.",
+    "keywords": [
+      "non-action",
+      "return",
+      "natural order",
+      "Tao"
+    ],
+    "tcm": "Associated with the concept of Wu Wei, or effortless action, in TCM and Energy practices."
+  },
+  "27": {
+    "number": 27,
+    "name": "Xiaoxu",
+    "english": "Deepening",
+    "chinese": "小敛",
+    "upper": "☴",
+    "lower": "☶",
+    "judgment": "The hexagram Deepening represents a situation in which a process of penetration has been completed, and the result is a deepening of the situation. The hexagram is made up of the trigram for water, which is associated with the receptive, yielding, and penetrating qualities. The trigram for thunder, which is associated with the creative, dynamic, and explosive qualities, is below. The combination of these two trigrams indicates a situation in which the penetrating and yielding qualities are in balance.",
+    "image": "The image is a well that has been dug deep, and the water is clear and cool.",
+    "keywords": [
+      "penetration",
+      "yielding",
+      "balance",
+      "harmony"
+    ],
+    "tcm": "Associated with the Kidney and Bladder meridians, and the Water element."
+  },
+  "28": {
+    "number": 28,
+    "name": "Dà Gǔ",
+    "english": "Great Excess",
+    "chinese": "大過",
+    "upper": "☰",
+    "lower": "☱",
+    "judgment": "The great excess does not lead to good fortune. It is not favorable to be persevering in this. It is not good to cross the great stream.",
+    "image": "The lake has overflowed its banks.",
+    "keywords": [
+      "excess",
+      "overflow",
+      "abundance",
+      "chaos"
+    ],
+    "tcm": "Associated with the Liver Meridian and the Wood element, excess and abundance."
+  },
+  "30": {
+    "number": 30,
+    "name": "张小三五",
+    "english": "Fire Trigram, Fire Trigram",
+    "chinese": "龙五",
+    "upper": "雨五",
+    "lower": "雨五",
+    "judgment": "Fire in the fourth place means: The fire is burning brightly; all is well.",
+    "image": "Fire in the fourth place.",
+    "keywords": [
+      "Fire",
+      "Brightness",
+      "Success"
+    ],
+    "tcm": "Associated with the Fire Element, representing warmth and energy."
+  },
+  "31": {
+    "number": 31,
+    "name": "张三 (张三)",
+    "english": "Fire Trigram, Mountain",
+    "chinese": "龙三",
+    "upper": "雨",
+    "lower": "张",
+    "judgment": "Fire on the mountain: The fire that burns bright on the mountain is about to spread to the valleys. The superior man brings order out of chaos.",
+    "image": "Fire burns on the mountain. The image of fire burning on the mountain.",
+    "keywords": [
+      "Fire",
+      "Mountain",
+      "Spread",
+      "Order"
+    ],
+    "tcm": "Associated with the Fire Element, representing transformation and energy."
+  },
+  "32": {
+    "number": 32,
+    "name": "Heng (Héng)",
+    "english": "Perseverance-Duration",
+    "chinese": "很",
+    "upper": "☰",
+    "lower": "☰",
+    "judgment": "Perseverance brings good fortune. It is not through personal effort that progress is made, but through the perseverance of circumstances.",
+    "image": "The mountain is surrounded by the earth. The earth is the symbol of the receptive, the mountain of the creative. The mountain is surrounded by the earth, and this means that the creative is in the receptive. Thus the hexagram is a picture of the transition from the dark, receptive to the light, creative.",
+    "keywords": [
+      "perseverance",
+      "duration",
+      "circumstances",
+      "progress"
+    ],
+    "tcm": "Associated with the Kidney and Water elements, representing receptivity and endurance."
+  },
+  "33": {
+    "number": 33,
+    "name": "Tun",
+    "english": "Retreat",
+    "chinese": "很",
+    "upper": "三中",
+    "lower": "三中",
+    "judgment": "When a man has lost his friend, even the thought of him may be a sorrow to him. But he should not be overcome by this sorrow, for in the course of all things there is a cycle, and sorrow is a necessary part of this cycle. The thought of his friend may be a sorrow to him, but it may also be a stimulus to him to make new friends, and thus to find a new happiness.",
+    "image": "A man is in a place where he is not wanted, and he is about to leave it.",
+    "keywords": [
+      "sorrow",
+      "cycle",
+      "stimulus",
+      "happiness"
+    ],
+    "tcm": "Withdrawal, rest, and relaxation."
+  },
+  "34": {
+    "number": 34,
+    "name": "张三三",
+    "english": "Return",
+    "chinese": "张",
+    "upper": "三三",
+    "lower": "三",
+    "judgment": "Return to the beginning. Success.",
+    "image": "The lake has sunk into the earth: the lake has been depleted.",
+    "keywords": [
+      "return",
+      "success",
+      "beginning",
+      "depletion"
+    ],
+    "tcm": "Associated with the Kidney and Water element, representing receptivity and storage."
+  },
+  "35": {
+    "number": 35,
+    "name": "Tai Xu",
+    "english": "Great Accumulation",
+    "chinese": "很小",
+    "upper": "三五",
+    "lower": "五五",
+    "judgment": "Great accumulation, success. The king offers a sacrifice of a goat. It furthers one to see the great man.",
+    "image": "The lake has risen above the trees. The lake is filled to overflowing, and the water rises above the highest tree.",
+    "keywords": [
+      "success",
+      "great man",
+      "sacrifice",
+      "abundance"
+    ],
+    "tcm": "Associated with the concept of 'qi' accumulation and storage, reflecting the idea of building up energy and resources for future use."
+  },
+  "36": {
+    "number": 36,
+    "name": "Miéng 张 (Miîng Düng)",
+    "english": "Net",
+    "chinese": "张",
+    "upper": "隝三",
+    "lower": "三五",
+    "judgment": "The net is set in the open; the spirit is caught. Thus the superior man takes possession of the world.",
+    "image": "The net is set in the open; the spirit is caught. Thus the superior man takes possession of the world.",
+    "keywords": [
+      "net",
+      "open",
+      "spirit",
+      "superior man"
+    ],
+    "tcm": "Associated with the Lung and Large Intestine meridians, and the element of Metal."
+  },
+  "37": {
+    "number": 37,
+    "name": "Jin (Jīn)",
+    "english": "The Army",
+    "chinese": "進",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "The army has been sent out to capture an adversary. The general is at the head of his troops; the season is spring - the time of renewal and of opening up. The situation is such that the commander holds a position of high honor; and it is also a time of great responsibility. The conflict is already in full swing; the army is out in the field, and the general must be prepared to face all the dangers that surround him.",
+    "image": "The image of the army.",
+    "keywords": [
+      "war",
+      "military",
+      "strategy",
+      "tactics"
+    ],
+    "tcm": "Associated with the Liver Meridian and the Wood element, representing growth, expansion, and movement."
+  },
+  "38": {
+    "number": 38,
+    "name": "张三",
+    "english": "Work on What Has Been Spoiled",
+    "chinese": "张三",
+    "upper": "三丁",
+    "lower": "三张",
+    "judgment": "The hexagram of work on what has been spoiled. The king of old, in his dealings with the spirits of the land, was not a man given to extravagance. He was sparing of his wealth in the service of the spirits, and he was also sparing of his wealth in the service of the people. He was not a man who would squander his wealth on the spirits, nor was he a man who would squander his wealth on the people. He was a man who would use his wealth to benefit the people, and he was a man who would use his wealth to benefit the spirits.",
+    "image": "The hexagram of work on what has been spoiled. The king of old, in his dealings with the spirits of the land, was not a man given to extravagance. He was sparing of his wealth in the service of the spirits, and he was also sparing of his wealth in the service of the people. He was not a man who would squander his wealth on the spirits, nor was he a man who would squander his wealth on the people. He was a man who would use his wealth to benefit the people, and he was a man who would use his wealth to benefit the spirits.",
+    "keywords": [
+      "Spoiled",
+      "Sparing",
+      "Wealth",
+      "Benefit"
+    ],
+    "tcm": "Association with the Kidney and Water element, indicating a need to conserve and restore energy."
+  },
+  "40": {
+    "number": 40,
+    "name": "Liéng Yûbéng",
+    "english": "Reducing",
+    "chinese": "很小",
+    "upper": "三中",
+    "lower": "七中",
+    "judgment": "The superior man is modest in his speech, but exceeds in his actions.",
+    "image": "A trigram above, a trigram below, in the center, fire.",
+    "keywords": [
+      "modesty",
+      "excess",
+      "action",
+      "speech"
+    ],
+    "tcm": "Associated with the Fire element, representing warmth, energy and transformation."
+  },
+  "41": {
+    "number": 41,
+    "name": "Revolution (Zhànlùn)",
+    "english": "Revolution",
+    "chinese": "變",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "Revolution is a movement which brings about a complete change of situation. It is a movement of the superior man, who seeks to establish order in the world. The hexagram pictures a situation in which a new movement is about to arise, but the conditions are not yet ripe. The time of revolution, or change, is at hand, but it has not yet arrived.",
+    "image": "The hexagram pictures a situation in which a new movement is about to arise, but the conditions are not yet ripe. The time of revolution, or change, is at hand, but it has not yet arrived.",
+    "keywords": [
+      "change",
+      "revolution",
+      "movement",
+      "order"
+    ],
+    "tcm": "Associated with the Liver and Gallbladder meridians, representing change and revolution in the body."
+  },
+  "42": {
+    "number": 42,
+    "name": "I",
+    "english": "Increase",
+    "chinese": "",
+    "upper": "☰",
+    "lower": "☴",
+    "judgment": "The trend of events is on the side of the great. Success.",
+    "image": "The lake has risen above the earth; and the reeds have begun to sprout.",
+    "keywords": [
+      "increase",
+      "growth",
+      "expansion",
+      "progress"
+    ],
+    "tcm": "Associated with the Liver Meridian and the Wood element, representing growth and expansion."
+  },
+  "43": {
+    "number": 43,
+    "name": "Kuñøu (Könghéu)",
+    "english": "Coming to Meet",
+    "chinese": "很口小",
+    "upper": "主五",
+    "lower": "很口",
+    "judgment": "Coming to meet is the coming to meet. It does not further the man who is in the right. It does not further the man who is in the wrong. It is dangerous to cross the great stream.",
+    "image": "A stream crossing a mountain. Water flows out at the top.",
+    "keywords": [
+      "danger",
+      "obstacles",
+      "hindrance",
+      "obstruction"
+    ],
+    "tcm": "Associated with the Water element, representing flow, change, and transformation."
+  },
+  "44": {
+    "number": 44,
+    "name": " Kou (Gòu)",
+    "english": "Coming to Meet",
+    "chinese": "夭",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "Coming to meet with what has been spoiled brings good fortune. It furthers one to bring to completion. It furthers one to have somewhere to go.",
+    "image": "A tree which is storm-broken and uprooted, so that only its lower part is still in the earth, while the arms are already broken and withered.",
+    "keywords": [
+      "coming",
+      "spoiled",
+      "completion",
+      "journey"
+    ],
+    "tcm": "Associated with the Water element, Kidney and Bladder meridians, and the concept of 'receiving' or 'yielding' energy."
+  },
+  "45": {
+    "number": 45,
+    "name": "Ding",
+    "english": "Welcome the Guest",
+    "chinese": "",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "Welcome the guest, but do not let him stay too long. He will bring you honor, but do not let him stay too long. He will bring you honor, but do not let him stay too long.",
+    "image": "Welcome the guest, but do not let him stay too long. He will bring you honor, but do not let him stay too long.",
+    "keywords": [
+      "guest",
+      "honor",
+      "welcome",
+      "respect"
+    ],
+    "tcm": "Associated with the Liver Meridian and the Wood element, representing growth and expansion."
+  },
+  "46": {
+    "number": 46,
+    "name": "Sheng",
+    "english": "Pushing Upward",
+    "chinese": "升",
+    "upper": "☰",
+    "lower": "☱",
+    "judgment": "The hexagram Pushing Upward shows a situation in which a new development is possible. It is a time of hope and promise, but also of danger. The situation is not yet ripe, and the development is still being pushed upward. This is a warning against precipitous action.",
+    "image": "A tree growing on a mountain.",
+    "keywords": [
+      "growth",
+      "development",
+      "hope",
+      "danger"
+    ],
+    "tcm": "Associated with the Liver Meridian and the Wood element, representing growth and expansion."
+  },
+  "47": {
+    "number": 47,
+    "name": "Kuñgü (Köng)",
+    "english": "Opposition",
+    "chinese": "小小",
+    "upper": "三中",
+    "lower": "三中",
+    "judgment": "Opposition. Thus the superior man fights with all his will that which is wrong, and makes it clear to the people that he does so.",
+    "image": "A man is fighting an opponent, but he does not get the better of him. He can, however, avoid the opponent's blows.",
+    "keywords": [
+      "opposition",
+      "conflict",
+      "struggle",
+      "assertion"
+    ],
+    "tcm": "Associated with the Kidney and Water elements, representing the body's will to live and the need to assert oneself in the face of adversity."
+  },
+  "49": {
+    "number": 49,
+    "name": "Revolution (Zhìhuà)",
+    "english": "Revolution",
+    "chinese": "革",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "Revolution is a time of great change, when the old is broken down and the new is being formed. It is a time of upheaval, but also of opportunity for growth and renewal.",
+    "image": "The image is of a tree that has been uprooted, but is still connected to its roots. This represents the connection between the old and the new, and the idea that even in times of great change, there is still a connection to the past.",
+    "keywords": [
+      "change",
+      "upheaval",
+      "growth",
+      "renewal"
+    ],
+    "tcm": "Associated with the Liver Meridian, representing change and transformation in the body."
+  },
+  "50": {
+    "number": 50,
+    "name": "Xīn",
+    "english": "The Cauldron",
+    "chinese": "",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "The Cauldron is a symbol of the nourishing and life-giving forces of the universe. It is the source of all that is good and beneficial. The judgment text is a call to trust in the natural order of things and to have faith in the goodness of the universe.",
+    "image": "The image is a cauldron, symbolizing the nourishing and life-giving forces of the universe.",
+    "keywords": [
+      "nourishment",
+      "life",
+      "goodness",
+      "trust"
+    ],
+    "tcm": "Associated with the spleen and stomach meridians, and the element of water."
+  },
+  "51": {
+    "number": 51,
+    "name": "Chen / Shock, Thunder",
+    "english": "Shock, Thunder",
+    "chinese": "彩",
+    "upper": "主三",
+    "lower": "主五",
+    "judgment": "Shock brings ruin, and with it, fear. The superior man knows how to ward off calamity.",
+    "image": "Thunder in the fire, shock, thunder.",
+    "keywords": [
+      "Shock",
+      "Thunder",
+      "Ruin",
+      "Fear"
+    ],
+    "tcm": "Associated with the Kidney and Bladder meridians, and the Water element."
+  },
+  "52": {
+    "number": 52,
+    "name": "Gen Bō",
+    "english": "Keeping Still, Mountain",
+    "chinese": "艮",
+    "upper": "☶",
+    "lower": "☶",
+    "judgment": "Keeping still means : calmness. Keeping still develops itself out of perseverance and limitation. It is not the stillness of a mountain that has been suddenly frozen, nor the stillness of a stagnant pool of water. It is the calmness of a mountain that is surrounded by the turmoil of the world, and the stillness of a stream that flows through the midst of the turmoil. The mountain is calm because it is strong, and the stream is calm because it is free.",
+    "image": "The mountain is calm because it is strong, and the stream is calm because it is free.",
+    "keywords": [
+      "calmness",
+      "perseverance",
+      "limitation",
+      "strength",
+      "freedom"
+    ],
+    "tcm": "Associated with the Kidney and Water elements, representing the stillness and quietness of the body and mind."
+  },
+  "53": {
+    "number": 53,
+    "name": "Cheng  张",
+    "english": "Gradual Progress",
+    "chinese": "张",
+    "upper": "主三",
+    "lower": "主一",
+    "judgment": "Gradual progress. It furthers one to bring even a small thing to a successful conclusion.",
+    "image": "A man sets out on a path. He is not a child's child, that is why he does not get lost on the way.",
+    "keywords": [
+      "progress",
+      "perseverance",
+      "small things",
+      "success"
+    ],
+    "tcm": "Associated with the Kidney and Water element, representing receptivity and storage."
+  },
+  "54": {
+    "number": 54,
+    "name": "Kuei Mei",
+    "english": "Coming to Meet",
+    "chinese": "很发",
+    "upper": "主五",
+    "lower": "主五",
+    "judgment": "Coming to meet with the noble man brings great good fortune. It furthers one to undertake something.",
+    "image": "Coming to meet with the noble man brings great good fortune. It furthers one to undertake something.",
+    "keywords": [
+      "good fortune",
+      "undertake",
+      "noble",
+      "great"
+    ],
+    "tcm": "Associated with the Kidney and Water energies, receiving nourishment and support."
+  },
+  "55": {
+    "number": 55,
+    "name": "Feng",
+    "english": "Abundance",
+    "chinese": "很",
+    "upper": "三中",
+    "lower": "三中",
+    "judgment": "Abundance has success. The king offers it sacrifice. It must be used to revive the old, to strengthen the weak, and to help the few. If you are in the position of strength, do not exploit the weak. Use your power to help those in need, and you will be rewarded.",
+    "image": "The lake above is overflowing, and the lake below is rising. The image of abundance.",
+    "keywords": [
+      "abundance",
+      "generosity",
+      "helping others",
+      "reciprocity"
+    ],
+    "tcm": "Associated with the concept of 'qi' and the flow of energy in the body."
+  },
+  "56": {
+    "number": 56,
+    "name": "Liàoyǒng",
+    "english": "The Wanderer",
+    "chinese": "旅用",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "The wanderer has no fixed abode; he does not attach himself to anything and so is free to wander freely. He is not a fugitive, but a wanderer in the sense that he does not limit himself to any one place. He does not attach himself to anything, and so is free to wander freely.",
+    "image": "A wanderer is on the road.",
+    "keywords": [
+      "freedom",
+      "wanderer",
+      "adventure",
+      "spontaneity",
+      "flexibility"
+    ],
+    "tcm": "Associated with the concept of 'free flow' or 'unobstructed flow' in Traditional Chinese Medicine, representing the ability to move and flow freely without restriction."
+  },
+  "57": {
+    "number": 57,
+    "name": "Xun Sun",
+    "english": "The Penetrating",
+    "chinese": "遯",
+    "upper": "☴",
+    "lower": "☶",
+    "judgment": "The Penetrating, the Clinging, the Gentle, the Soft. Thus the superior man, in his conduct of the world, is cautious and penetrating.",
+    "image": "A wind blowing over water.",
+    "keywords": [
+      "penetration",
+      "gentleness",
+      "caution",
+      "softness"
+    ],
+    "tcm": "Associated with the Kidney and Liver meridians, and the element of Water."
+  },
+  "58": {
+    "number": 58,
+    "name": "Dà Chú",
+    "english": "Great Possession",
+    "chinese": "大畜",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "The great man, by his merits, commands great respect. He is predestined to come to his own. All things make their way to him, and there is no one who would not wish to be his companion.",
+    "image": "A sheep is being kept under the care of a man.",
+    "keywords": [
+      "merit",
+      "respect",
+      "predestination",
+      "companion"
+    ],
+    "tcm": "Associated with the Kidney and Water element, representing storage and nourishment."
+  },
+  "59": {
+    "number": 59,
+    "name": "Jian",
+    "english": "Dispersion",
+    "chinese": "削",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "Dispersion. The king has lost his place. He must not try to remain in power by force. Thus dispersion is the more to be desired.",
+    "image": "The king has lost his place. He must not try to remain in power by force. Thus dispersion is the more to be desired.",
+    "keywords": [
+      "dispersion",
+      "loss of power",
+      "yielding",
+      "letting go"
+    ],
+    "tcm": "Associated with the release of stagnant energy and the dispersal of pathogenic factors."
+  },
+  "60": {
+    "number": 60,
+    "name": "Liàoyǒng",
+    "english": "Penetration",
+    "chinese": "剋用",
+    "upper": "☰",
+    "lower": "☱",
+    "judgment": "Penetration. Thus the superior man skilfully models the peerless for the ordinary people.",
+    "image": "A trigram ☰ above, a trigram ☱ below.",
+    "keywords": [
+      "penetration",
+      "modeling",
+      "superior",
+      "ordinary"
+    ],
+    "tcm": "Associated with the Fire element, representing warmth and energy."
+  },
+  "61": {
+    "number": 61,
+    "name": "Zhöng Yöu",
+    "english": "Inner Truth",
+    "chinese": "很很",
+    "upper": "三中",
+    "lower": "三中",
+    "judgment": "Inner truth. In the light of the three, the individual must see how he stands. The world is in a transition period, and truth appears in the open. There may be reason to fear that others will not understand you, that they will not deal with you in accordance with your merits; therefore, in this situation it is necessary to be strong in character.",
+    "image": "A man is in a place of transition, and he must be careful not to be overcome by the forces that are driving him forward.",
+    "keywords": [
+      "inner truth",
+      "transition",
+      "character",
+      "merit"
+    ],
+    "tcm": "Associated with the spleen and the element of earth, representing stability and nourishment."
+  },
+  "63": {
+    "number": 63,
+    "name": "Jor (Jiāo)",
+    "english": "Return",
+    "chinese": "归",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "Return, the hexagram of return, is the return to the light, to the truth, to the good. It is the return to the source, to the origin, to the beginning. It is the return to the self, to the inner truth, to the inner light.",
+    "image": "The image is of a man returning home after a long journey.",
+    "keywords": [
+      "return",
+      "homecoming",
+      "renewal",
+      "rebirth"
+    ],
+    "tcm": "Associated with the Kidney and Water elements, representing the return to the source and the cyclical nature of life."
+  },
+  "64": {
+    "number": 64,
+    "name": "张主主 (Wēi 主主)",
+    "english": "Before Completion",
+    "chinese": "张主主",
+    "upper": "三主",
+    "lower": "主主",
+    "judgment": "Before completion, it is not fitting to cross the great stream. It is beneficial to see the great man. Perseverance brings good fortune.",
+    "image": "A before completion, a after completion.",
+    "keywords": [
+      "Completion",
+      "Perseverance",
+      "Good Fortune",
+      "Great Man"
+    ],
+    "tcm": "Associated with the Kidney and Water element, representing receptivity and storage."
+  },
+  "16": {
+    "number": 16,
+    "name": "Yuñø (yönø)",
+    "english": "Enthusiasm",
+    "chinese": "小主",
+    "upper": "三中",
+    "lower": "下井",
+    "judgment": "Enthusiasm is dangerous. It has to be held in check. Therefore the hexagram for it contains the warning.",
+    "image": "The hexagram for Enthusiasm is the same as that for Possession in Greatness, but the lines are reversed. The movement is the same, but it is now directed in the opposite way.",
+    "keywords": [
+      "danger",
+      "enthusiasm",
+      "caution",
+      "reversal"
+    ],
+    "tcm": "Associated with the Heart and the Fire element, enthusiasm is linked to the emotions and the passion of the individual."
+  },
+  "26": {
+    "number": 26,
+    "name": "Da Gai",
+    "english": "Great Taming",
+    "chinese": "大遂",
+    "upper": "☰",
+    "lower": "☵",
+    "judgment": "The hexagram of great taming is the one of the great man. He is tamed, and yet he is not tamed. He is tamed by his own great virtue, and yet he is not tamed by the great virtue of others. He is tamed by his own great wisdom, and yet he is not tamed by the great wisdom of others.",
+    "image": "The great man is tamed by his own great virtue, and yet he is not tamed by the great virtue of others. He is tamed by his own great wisdom, and yet he is not tamed by the great wisdom of others.",
+    "keywords": [
+      "great",
+      "taming",
+      "virtue",
+      "wisdom"
+    ],
+    "tcm": "Associated with the Kidney and Water element, representing receptivity and storage."
+  },
+  "39": {
+    "number": 39,
+    "name": "Chieh",
+    "english": "Obstruction",
+    "chinese": "尿",
+    "upper": "主三",
+    "lower": "主五",
+    "judgment": "Obstruction. Thus the superior man keeps the inferior man at a distance, not by denouncing him, but by surrounding him with superiority.",
+    "image": "He who tries to climb up by means of others but does not recognize the danger of this course finally meets with failure.",
+    "keywords": [
+      "obstruction",
+      "distance",
+      "superiority",
+      "failure"
+    ],
+    "tcm": "Obstruction of Qi flow, stagnation, blockage"
+  },
+  "48": {
+    "number": 48,
+    "name": "Zhü Xü (Zhü Xü)",
+    "english": "The Well",
+    "chinese": "尽尽",
+    "upper": "三三",
+    "lower": "五五",
+    "judgment": "The well has been dug, the well is being lined. Success. The well is being lined. The well is being lined. It is not easy to carry the well-dressing.",
+    "image": "The trigram Li, fire, is repeated, and the line above is in the place of the second son. The trigram Ken, water, is repeated, and the line below is in the place of the second son. The well is being lined. The well is being lined. It is not easy to carry the well-dressing.",
+    "keywords": [
+      "well",
+      "success",
+      "difficulty",
+      "perseverance"
+    ],
+    "tcm": "Associated with the Kidney and Water element, representing receptivity and storage."
+  },
+  "29": {
+    "number": 29,
+    "name": "Kan",
+    "english": "The Abysmal (Water)",
+    "chinese": "坎",
+    "upper": "☵",
+    "lower": "☵",
+    "judgment": "The Abysmal repeated. If you are sincere, you have success in your heart, and whatever you do succeeds.",
+    "image": "Water flows on uninterrupted and reaches its goal: the image of the Abysmal repeated. Thus the superior person maintains constant virtue and instructs others in the business of teaching.",
+    "keywords": [
+      "danger",
+      "depth",
+      "repetition",
+      "sincerity"
+    ],
+    "tcm": "Water element. Kidneys and Bladder. Emotional depth and fear."
+  },
+  "62": {
+    "number": 62,
+    "name": "Xiao Guo",
+    "english": "Preponderance of the Small",
+    "chinese": "小過",
+    "upper": "☳",
+    "lower": "☶",
+    "judgment": "Preponderance of the Small. Success. Perseverance furthers. Small things may be done; great things should not be done.",
+    "image": "Thunder on the mountain: the image of Preponderance of the Small. Thus in his conduct the superior person gives the precedence to humility. In mourning he gives precedence to grief. In his expenditures he gives precedence to thrift.",
+    "keywords": [
+      "humility",
+      "caution",
+      "small matters",
+      "conscientiousness"
+    ],
+    "tcm": "Earth and Wood imbalance. Digestion and nervous system. Focus on small adjustments."
+  }
+}
