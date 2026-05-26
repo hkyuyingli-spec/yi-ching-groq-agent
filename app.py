@@ -10,8 +10,8 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 # Load environment variables
 load_dotenv()
 
-from core.iching_core import IChingCore
-from core.interpreter import IChingInterpreter
+from iching_core import IChingCore
+from interpreter import IChingInterpreter
 
 # Page Configuration
 st.set_page_config(page_title="Yi Ching AI", page_icon="☰", layout="centered")
