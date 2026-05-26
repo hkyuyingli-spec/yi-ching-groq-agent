@@ -1,7 +1,7 @@
 import os
 from groq import Groq
 from dotenv import load_dotenv
-from prompts import SYSTEM_PROMPT, get_interpretation_prompt, get_direct_consultation_prompt
+from utils.prompts import SYSTEM_PROMPT, get_interpretation_prompt, get_direct_consultation_prompt
 
 # Load environment variables from .env file
 load_dotenv()
@@ -22,7 +22,10 @@ class IChingInterpreter:
                 transformed_num=transformed_num
             )
             
-            return self._query_groq(prompt)
+            return self._query_groq([
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": prompt}
+            ])
             
         except Exception as e:
             # Log the specific error for debugging if needed
@@ -31,19 +34,36 @@ class IChingInterpreter:
     def get_direct_reading(self, question: str):
         try:
             prompt = get_direct_consultation_prompt(question)
-            return self._query_groq(prompt)
+            return self._query_groq([
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": prompt}
+            ])
         except Exception as e:
             return f"❌ Error in Direct Consultation: {str(e)}"
 
-    def _query_groq(self, prompt: str):
-        messages = [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": prompt}
+    def chat(self, messages: list):
+        try:
+            # Create a copy to avoid modifying session state and ensure system prompt is present
+            api_messages = []
+            if not any(m.get("role") == "system" for m in messages):
+                api_messages.append({"role": "system", "content": SYSTEM_PROMPT})
+            
+            api_messages.extend(messages)
+            
+            return self._query_groq(api_messages)
+        except Exception as e:
+            return f"❌ Error in Chat: {str(e)}"
+
+    def _query_groq(self, messages: list):
+        # Additional safety check for messages structure
+        filtered_messages = [
+            {"role": m["role"], "content": m["content"]}
+            for m in messages if m["role"] in ["system", "user", "assistant"]
         ]
         
         response = self.client.chat.completions.create(
             model="llama-3.1-8b-instant",
-            messages=messages
+            messages=filtered_messages
         )
         
         return response.choices[0].message.content.strip()
