@@ -7,6 +7,10 @@ import json
 import os
 from groq import AsyncGroq
 from dotenv import load_dotenv
+from textblob import TextBlob
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
 
 load_dotenv()
 
@@ -18,6 +22,8 @@ class SpiritualState:
     current_stage: str = "Foundation Establishment"
     total_tokens_consumed: int = 0
     stage_index: int = 0
+    sentiment_history: List[float] = field(default_factory=list)
+    elemental_affinity: str = "Neutral"
     
     stages: List[str] = field(default_factory=lambda: [
         "Foundation Establishment", 
@@ -35,11 +41,13 @@ class SpiritualState:
 
 class QuantumEngine:
     @staticmethod
-    def quantum_collapse_observation() -> float:
-        """Simulates a quantum collapse to determine spiritual resonance (0.0 to 1.0)"""
-        # Quantum-inspired resonance calculation
-        resonance = (random.random() * 0.5) + (random.uniform(0, 0.5))
-        return round(resonance, 4)
+    def quantum_collapse_observation(sentiment: float = 0.0) -> float:
+        """Simulates a quantum collapse influenced by user sentiment (-1.0 to 1.0)"""
+        # Quantum-inspired resonance calculation influenced by sentiment
+        # Higher sentiment (positivity) slightly biases towards higher resonance
+        bias = sentiment * 0.1
+        resonance = (random.random() * 0.5) + (random.uniform(0, 0.5)) + bias
+        return round(max(0.0, min(1.0, resonance)), 4)
 
 class GroqManager:
     def __init__(self):
@@ -86,8 +94,8 @@ class BaseStage:
         self.model = model
         self.system_prompt = system_prompt
 
-    def get_enriched_prompt(self, state: SpiritualState, resonance: float, context: str) -> str:
-        return f"{self.system_prompt}\n\n[SPIRITUAL RESONANCE: {resonance}]\n[CURRENT DAO COMPREHENSION: {state.dao_comprehension}]\n\nReference Metadata (Ancient Records):\n{context}"
+    def get_enriched_prompt(self, state: SpiritualState, resonance: float, context: str, sentiment_label: str) -> str:
+        return f"{self.system_prompt}\n\n[SPIRITUAL RESONANCE: {resonance}]\n[CURRENT DAO COMPREHENSION: {state.dao_comprehension}]\n[USER INTENT SENTIMENT: {sentiment_label}]\n\nReference Metadata (Ancient Records):\n{context}"
 
 class AscensionAI:
     def __init__(self, hexagrams_path='data/hexagrams.json', cosmology_path='data/cosmology.json'):
@@ -96,6 +104,11 @@ class AscensionAI:
         self.groq = GroqManager()
         self.hexagrams = self._load_json(hexagrams_path)
         self.cosmology = self._load_json(cosmology_path)
+        
+        # Initialize ML components
+        self.vectorizer = TfidfVectorizer(stop_words='english')
+        self._prepare_vector_index()
+        self._prepare_elemental_classifier()
         
         self.stages = {
             "Foundation Establishment": BaseStage(
@@ -141,29 +154,98 @@ class AscensionAI:
                 return json.load(f)
         return {}
 
-    def _get_rag_context(self, query: str) -> str:
-        # Simple keyword-based RAG for demonstration
-        context = []
-        # Check cosmology
-        if "feng shui" in query.lower() or "qi" in query.lower():
-            context.append(str(self.cosmology.get("luo_shu", "")))
+    def _prepare_vector_index(self):
+        """Builds a TF-IDF index of all hexagram data for semantic RAG"""
+        self.corpus = []
+        self.corpus_metadata = []
         
-        # Check for hexagram numbers or names
+        # Index Hexagrams
         for h_id, data in self.hexagrams.items():
-            if h_id in query or data.get("name", "").lower() in query.lower():
-                context.append(f"Hexagram {h_id} ({data.get('name')}): {data.get('judgment')} - {data.get('image')}")
-                break # Just add one for brevity in context
+            text = f"Hexagram {h_id} {data.get('name')} {data.get('english')} {data.get('judgment')} {data.get('image')} {' '.join(data.get('keywords', []))}"
+            self.corpus.append(text)
+            self.corpus_metadata.append({
+                "type": "hexagram",
+                "id": h_id,
+                "content": f"Hexagram {h_id} ({data.get('name')} - {data.get('english')}): {data.get('judgment')}"
+            })
+            
+        # Index Cosmology
+        for key, val in self.cosmology.items():
+            if isinstance(val, dict):
+                text = f"Cosmology {key} {str(val)}"
+                self.corpus.append(text)
+                self.corpus_metadata.append({
+                    "type": "cosmology",
+                    "id": key,
+                    "content": f"Cosmological Insight ({key}): {str(val)[:200]}..."
+                })
         
-        return "\n".join(context) if context else "General cosmological background applies."
+        if self.corpus:
+            self.tfidf_matrix = self.vectorizer.fit_transform(self.corpus)
+
+    def _get_rag_context(self, query: str) -> str:
+        """ML-powered semantic search instead of keyword matching"""
+        if not self.corpus:
+            return "General cosmological background applies."
+            
+        query_vec = self.vectorizer.transform([query])
+        similarities = cosine_similarity(query_vec, self.tfidf_matrix).flatten()
+        
+        # Get top 3 most relevant entries
+        top_indices = np.argsort(similarities)[-3:][::-1]
+        
+        context = []
+        for idx in top_indices:
+            if similarities[idx] > 0.1: # Threshold for relevance
+                context.append(self.corpus_metadata[idx]["content"])
+        
+        return "\n\n".join(context) if context else "The universal patterns are subtle; continue your inquiry."
+
+    def _prepare_elemental_classifier(self):
+        """Builds a simple classifier for the Five Elements (Wu Xing)"""
+        self.elements = {
+            "Wood (木)": "growth expansion flexibility liver spring east green",
+            "Fire (火)": "passion heart heat summer south red expansion transformation",
+            "Earth (土)": "stability balance spleen transition center yellow nourishment",
+            "Metal (金)": "clarity lung autumn west white contraction harvest",
+            "Water (水)": "wisdom kidney winter north black flow stillness depth"
+        }
+        self.element_keys = list(self.elements.keys())
+        self.element_matrix = self.vectorizer.transform(self.elements.values())
+
+    def _classify_element(self, query: str) -> str:
+        """Classifies the query into one of the Five Elements using TF-IDF similarity"""
+        query_vec = self.vectorizer.transform([query])
+        similarities = cosine_similarity(query_vec, self.element_matrix).flatten()
+        
+        if np.max(similarities) > 0.05:
+            return self.element_keys[np.argmax(similarities)]
+        return "Neutral"
 
     async def cultivate(self, query: str, on_token: Optional[Callable[[str], None]] = None):
+        # Machine Learning: Sentiment Analysis
+        blob = TextBlob(query)
+        sentiment = blob.sentiment.polarity # -1.0 to 1.0
+        
+        # Machine Learning: Elemental Classification
+        self.state.elemental_affinity = self._classify_element(query)
+        
+        self.state.sentiment_history.append(sentiment)
+        
+        sentiment_label = "Neutral"
+        if sentiment > 0.3: sentiment_label = "Positive/Harmonious"
+        elif sentiment < -0.3: sentiment_label = "Negative/Conflicted"
+        
         current_stage_name = self.state.stages[self.state.stage_index]
         stage = self.stages[current_stage_name]
         
-        resonance = self.quantum.quantum_collapse_observation()
+        # ML-influenced resonance
+        resonance = self.quantum.quantum_collapse_observation(sentiment)
         context = self._get_rag_context(query)
         
-        system_msg = stage.get_enriched_prompt(self.state, resonance, context)
+        # Add element to prompt
+        system_msg = stage.get_enriched_prompt(self.state, resonance, context, sentiment_label)
+        system_msg += f"\n[ELEMENTAL AFFINITY: {self.state.elemental_affinity}]"
         
         messages = [
             {"role": "system", "content": system_msg},
@@ -172,10 +254,14 @@ class AscensionAI:
         
         response = await self.groq.get_streaming_response(stage.model, messages, on_token)
         
-        # Update spiritual state based on interaction
-        self.state.qi_energy += 1.0
-        self.state.dao_comprehension += 5.0 * (resonance + 1)
-        self.state.karma_entanglement = max(0, self.state.karma_entanglement - 0.2)
+        # Update spiritual state based on ML results
+        # Positive sentiment increases Qi more, negative sentiment increases Karma entanglement
+        qi_gain = 1.0 + (max(0, sentiment) * 2.0)
+        karma_change = 0.2 if sentiment < -0.2 else -0.1
+        
+        self.state.qi_energy += qi_gain
+        self.state.dao_comprehension += 5.0 * (resonance + 1) * (1.0 + abs(sentiment))
+        self.state.karma_entanglement = max(0, self.state.karma_entanglement + karma_change)
         
         # Check for breakthrough
         if self.state.dao_comprehension >= 100 * (self.state.stage_index + 1) and self.state.stage_index < len(self.state.stages) - 1:

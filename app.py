@@ -44,6 +44,19 @@ with st.sidebar:
     col1.metric("Qi Energy", f"{state.qi_energy:.1f}")
     col2.metric("Karma", f"{state.karma_entanglement:.1f}", delta_color="inverse")
     
+    # ML Insights
+    st.divider()
+    st.write("**:gray[Machine Learning Insights]**")
+    if state.sentiment_history:
+        last_sentiment = state.sentiment_history[-1]
+        sentiment_label = "Neutral 😐"
+        if last_sentiment > 0.3: sentiment_label = "Harmonious 😊"
+        elif last_sentiment < -0.3: sentiment_label = "Conflicted 😠"
+        st.caption(f"Last Intent Sentiment: **{sentiment_label}** ({last_sentiment:.2f})")
+    
+    if state.elemental_affinity != "Neutral":
+        st.caption(f"Current Elemental Affinity: **{state.elemental_affinity}**")
+    
     st.write("**Dao Comprehension**")
     st.progress(state.progress_percentage() / 100)
     st.caption(f"{state.dao_comprehension:.1f} / {100 * (state.stage_index + 1)}")
