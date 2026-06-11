@@ -204,11 +204,11 @@ class AscensionAI:
     def _prepare_elemental_classifier(self):
         """Builds a simple classifier for the Five Elements (Wu Xing)"""
         self.elements = {
-            "Wood (木)": "growth expansion flexibility liver spring east green",
-            "Fire (火)": "passion heart heat summer south red expansion transformation",
-            "Earth (土)": "stability balance spleen transition center yellow nourishment",
-            "Metal (金)": "clarity lung autumn west white contraction harvest",
-            "Water (水)": "wisdom kidney winter north black flow stillness depth"
+            "Wood (木)": "growth expansion flexibility liver spring east green forest vegetation wind creative development budding",
+            "Fire (火)": "passion heart heat summer south red expansion transformation burning flame light brilliance enthusiasm energy",
+            "Earth (土)": "stability balance spleen transition center yellow nourishment soil grounded foundation reliability digestive",
+            "Metal (金)": "clarity lung autumn west white contraction harvest sword precision focus structure order righteousness",
+            "Water (水)": "wisdom kidney winter north black flow stillness depth ocean river cool intuitive listening mystery"
         }
         self.element_keys = list(self.elements.keys())
         self.element_matrix = self.vectorizer.transform(self.elements.values())

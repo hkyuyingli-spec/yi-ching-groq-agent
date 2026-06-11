@@ -13,12 +13,17 @@ load_dotenv()
 
 from core.iching_core import IChingCore
 from core.ascension_ai import AscensionAI
+from utils.styles import apply_zen_styles, get_element_icon
+from utils.glossary import GLOSSARY, STAGES_EXPLAINED, SCORE_INTERPRETATIONS
 
 # Page Configuration
 st.set_page_config(page_title="Yi Ching Ascension AI", page_icon="☰", layout="wide")
 
+# Apply Zen Styles
+apply_zen_styles()
+
 st.title("☰ 易經 • Quantum Ascension")
-st.header(":blue[Grand Master] :orange[Groq] :red[Oracle]")
+st.markdown("### *Divine Wisdom of the Grand Master Oracle*")
 
 # Initialize session state
 if "core" not in st.session_state:
@@ -39,10 +44,27 @@ with st.sidebar:
     st.subheader(f":orange[{stage_name}]")
     st.caption(f"Model: `{stage_info.model}`")
     
-    # Live Gauges
+    # Live Gauges with Interpretations
     col1, col2 = st.columns(2)
-    col1.metric("Qi Energy", f"{state.qi_energy:.1f}")
-    col2.metric("Karma", f"{state.karma_entanglement:.1f}", delta_color="inverse")
+    
+    # Interpret Qi
+    qi_label = "Unknown"
+    for low, high, label in SCORE_INTERPRETATIONS["qi"]:
+        if low <= state.qi_energy < high:
+            qi_label = label
+            break
+            
+    # Interpret Karma
+    karma_label = "Unknown"
+    for low, high, label in SCORE_INTERPRETATIONS["karma"]:
+        if low <= state.karma_entanglement < high:
+            karma_label = label
+            break
+
+    col1.metric("Qi Energy", f"{state.qi_energy:.1f}", help=f"Current State: {qi_label}")
+    col2.metric("Karma", f"{state.karma_entanglement:.1f}", delta_color="inverse", help=f"Current State: {karma_label}")
+    
+    st.caption(f"Spirit Status: **{qi_label}** | Karma Status: **{karma_label}**")
     
     # ML Insights
     st.divider()
@@ -62,7 +84,14 @@ with st.sidebar:
     st.caption(f"{state.dao_comprehension:.1f} / {100 * (state.stage_index + 1)}")
 
     st.divider()
-    
+    with st.expander("📜 **Glossary of the Path**"):
+        for term, definition in GLOSSARY.items():
+            st.write(f"**{term}**: {definition}")
+        st.divider()
+        st.write("**:orange[Cultivation Realms]**")
+        for realm, desc in STAGES_EXPLAINED.items():
+            st.write(f"*{realm}*: {desc}")
+
     if st.button("🔄 Reset Spiritual Path", use_container_width=True):
         st.session_state.messages = []
         st.session_state.ascension = AscensionAI()
@@ -86,22 +115,39 @@ async def process_consultation(query, is_iching=False):
         response_placeholder = st.empty()
         full_response = ""
         
-        # If I Ching ritual, cast coins first
+        # If I Ching ritual, cast coins with ritualistic animation
         prefix = ""
         if is_iching:
-            with st.status("Casting the ancient coins...") as status:
+            ritual_container = st.container()
+            with ritual_container:
+                st.markdown("### 🏺 *The Ritual Begins*")
+                progress_ritual = st.empty()
+                
+                # Cast hexagram
                 cast_result = st.session_state.core.cast_hexagram()
-                time.sleep(0.8)
+                
+                # Animate line by line
+                for i, line in enumerate(cast_result['lines']):
+                    msg = f"Casting line {i+1}... **{line['symbol']}** ({line['type']})"
+                    progress_ritual.markdown(f"<div class='ritual-line'>{msg}</div>", unsafe_allow_html=True)
+                    time.sleep(0.4)
+                
+                time.sleep(0.5)
                 hex_info = f"**Primary Hexagram: #{cast_result['primary']}**"
                 if cast_result.get('transformed'):
                     hex_info += f" | **Transformed Hexagram: #{cast_result['transformed']}**"
-                prefix = f"✅ The coins have spoken!\n\n{hex_info}\n\n### 🌀 Master's Guidance\n\n"
-                status.update(label="Coins cast. Consulting the Oracle...", state="complete")
-        
+                
+                prefix = f"✅ **The coins have settled.**\n\n{hex_info}\n\n"
+                ritual_container.empty() # Clear ritual animation
+
         def on_token(token):
             nonlocal full_response
+            token_display = full_response + token
+            # Use custom container for the response
+            element_icon = get_element_icon(st.session_state.ascension.state.elemental_affinity)
+            formatted_response = f"<div class='oracle-response'><h3>{element_icon} Oracle's Guidance</h3>\n\n{prefix}{token_display}▌</div>"
+            response_placeholder.markdown(formatted_response, unsafe_allow_html=True)
             full_response += token
-            response_placeholder.markdown(prefix + full_response + "▌")
 
         # Use Ascension AI to cultivate the response
         final_text, breakthrough = await st.session_state.ascension.cultivate(
@@ -109,8 +155,10 @@ async def process_consultation(query, is_iching=False):
             on_token=on_token
         )
         
-        response_placeholder.markdown(prefix + final_text)
-        st.session_state.messages.append({"role": "assistant", "content": prefix + final_text})
+        element_icon = get_element_icon(st.session_state.ascension.state.elemental_affinity)
+        final_formatted = f"<div class='oracle-response'><h3>{element_icon} Oracle's Guidance</h3>\n\n{prefix}{final_text}</div>"
+        response_placeholder.markdown(final_formatted, unsafe_allow_html=True)
+        st.session_state.messages.append({"role": "assistant", "content": final_formatted})
         
         if breakthrough:
             st.balloons()
