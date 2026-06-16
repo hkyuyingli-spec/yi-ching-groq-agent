@@ -226,9 +226,9 @@ TRANSLATIONS = {
 }
 
 def translate(key: str, lang: str = "en") -> str:
-    \"\"\"
+    """
     Translates a key into the target language with fallback to English.
-    \"\"\"
+    """
     # Fallback to English if language not found
     lang_dict = TRANSLATIONS.get(lang, TRANSLATIONS["en"])
     # Fallback to key if not found in target language, then fallback to English value
