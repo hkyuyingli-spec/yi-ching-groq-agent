@@ -3,82 +3,114 @@ import streamlit as st
 def apply_zen_styles():
     st.markdown("""
         <style>
-        /* Main Background and Text */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+        /* Main Background and Body Text - Default to Inter for UI */
         .stApp {
-            background-color: #0E1117;
-            color: #E0E0E0;
+            background-color: #FDFBF7;
+            color: #222222;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        
-        /* Headers */
+
+        /* UI Labels, Buttons, Navigation */
+        .stButton>button, .stSelectbox, .stRadio, [data-baseweb="tab-list"], .stMetric {
+            font-family: 'Inter', sans-serif !important;
+        }
+
+        /* Headers - Wisdom/Titles use Lora */
         h1, h2, h3 {
-            color: #D4AF37 !important;
-            font-family: 'Georgia', serif;
+            color: #4A3728 !important;
+            font-family: 'Lora', serif;
+            font-weight: 600;
         }
-        
-        /* Sidebar Glassmorphism */
-        section[data-testid="stSidebar"] {
-            background-color: rgba(30, 34, 45, 0.7);
-            backdrop-filter: blur(10px);
-            border-right: 1px solid rgba(212, 175, 55, 0.2);
+
+        /* Professional Cards */
+        .pro-card {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E8E4D9;
         }
-        
-        /* Chat Message Styling */
-        [data-testid="stChatMessage"] {
-            background-color: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            margin-bottom: 10px;
+
+        /* Oracle Response & Wisdom Text - Explicitly Lora */
+        .oracle-response, .wisdom-text, .interpretation {
+            font-family: 'Lora', serif !important;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #333333;
         }
-        
-        /* Oracle Response Container */
+
         .oracle-response {
-            border-left: 3px solid #D4AF37;
-            padding-left: 20px;
-            background-color: rgba(212, 175, 55, 0.03);
-            font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
-            line-height: 1.6;
+            border-left: 4px solid #D4AF37;
+            padding: 20px;
+            background-color: #FCF9F2;
+            border-radius: 0 8px 8px 0;
             word-wrap: break-word;
             overflow-wrap: break-word;
-            word-break: break-word;
         }
-        
-        /* Progress Bar Styling */
-        .stProgress > div > div > div > div {
-            background-color: #D4AF37;
-        }
-        
-        /* Metrics */
-        [data-testid="stMetricValue"] {
-            color: #D4AF37 !important;
-        }
+
         
         /* Buttons */
         .stButton>button {
-            border: 1px solid #D4AF37;
-            background-color: transparent;
-            color: #D4AF37;
-            transition: all 0.3s ease;
+            border: 1px solid #4A3728;
+            background-color: #4A3728;
+            color: #FDFBF7 !important;
+            border-radius: 8px;
+            padding: 10px 24px;
+            font-weight: 600;
+            transition: all 0.2s ease;
         }
         .stButton>button:hover {
-            background-color: #D4AF37;
-            color: #0E1117;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            background-color: #5E4A3A;
+            border-color: #5E4A3A;
+            box-shadow: 0 4px 12px rgba(74, 55, 40, 0.2);
         }
         
-        /* Ritual Line Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Metrics and Progress */
+        [data-testid="stMetricValue"] {
+            color: #4A3728 !important;
+            font-weight: 700;
         }
-        .ritual-line {
-            animation: fadeIn 1s ease-out forwards;
-            color: #D4AF37;
-            font-size: 1.2rem;
-            margin: 5px 0;
+        .stProgress > div > div > div > div {
+            background-color: #4A3728;
+        }
+        
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .pro-card {
+                padding: 16px;
+            }
+            .oracle-response {
+                padding: 15px;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Custom Tab Styling */
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 24px;
+        }
+        .stTabs [data-baseweb="tab"] {
+            height: 50px;
+            white-space: pre;
+            font-weight: 600;
+            color: #666666;
+        }
+        .stTabs [aria-selected="true"] {
+            color: #4A3728 !important;
         }
         </style>
     """, unsafe_allow_html=True)
+
+def card_begin(title=None):
+    if title:
+        return f'<div class="pro-card"><h3>{title}</h3>'
+    return '<div class="pro-card">'
+
+def card_end():
+    return '</div>'
 
 def get_element_icon(element_name):
     icons = {

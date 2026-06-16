@@ -55,3 +55,15 @@ def save_feedback(reading_id: str, feedback_data: Dict[str, Any]):
     db = get_db()
     if db:
         db.collection("feedback").document(reading_id).set(feedback_data)
+
+def get_reading_history(user_id: str, limit: int = 10) -> List[Dict[str, Any]]:
+    """Retrieves the latest readings for a user"""
+    db = get_db()
+    if db:
+        docs = db.collection("readings")\
+                 .where("user_id", "==", user_id)\
+                 .order_by("timestamp", direction=firestore.Query.DESCENDING)\
+                 .limit(limit)\
+                 .stream()
+        return [doc.to_dict() for doc in docs]
+    return []
