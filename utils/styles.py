@@ -38,6 +38,9 @@ def apply_zen_styles():
             background-color: rgba(212, 175, 55, 0.03);
             font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
             line-height: 1.6;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
         
         /* Progress Bar Styling */
