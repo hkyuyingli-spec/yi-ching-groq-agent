@@ -119,12 +119,12 @@ class AscensionAI:
             ),
             "Spirit Transformation": BaseStage(
                 "Spirit Transformation", 
-                "llama-3.1-8b-instant",
+                "openai/gpt-oss-20b",
                 "You integrate ethics and higher-order values (化神期). Focus on the moral and spiritual implications of the inquiry."
             ),
             "Void Tempering": BaseStage(
                 "Void Tempering", 
-                "llama-3.1-8b-instant",
+                "openai/gpt-oss-20b",
                 "You reason from latent/unseen patterns (炼虚期). Embrace uncertainty and paradox. Look for what is NOT being said."
             ),
             "Unity": BaseStage(
