@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 load_dotenv()
 
-from core.ascension_ai import AscensionAI
+from core.ascension_ai import AscensionAI, GroqManager
 from core.iching_core import IChingCore
 from feedback_engine import process_feedback
 from firebase_config import get_reading_history, get_user_profile, init_firebase, save_reading
@@ -19,7 +19,7 @@ from hexagram_profiles import HEXAGRAM_PROFILES
 from utils.glossary import GLOSSARY
 from utils.styles import apply_zen_styles, card_begin, card_end
 from utils.translations import translate
-
+from core.fengshui import describe_hexagram_feng_shui  # Added this line
 
 st.set_page_config(page_title="Yi Ching Oracle", page_icon="☰", layout="wide")
 init_firebase()
@@ -122,6 +122,10 @@ Structure your response with these headers:
             if trans_bits:
                 prompt += f"\nChanging lines: {reading_data['changing_lines']}"
                 prompt += f"\nTransformed Hexagram: #{HEXAGRAM_PROFILES[trans_bits]['number']}"
+
+            # Feng Shui summary
+            feng_shui_summary = describe_hexagram_feng_shui(reading_data)
+            prompt += f"\n\nFeng Shui Summary:\n{feng_shui_summary['summary']}"
         else:
             prompt = query
 

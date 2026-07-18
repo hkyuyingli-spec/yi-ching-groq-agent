@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from groq import AsyncGroq
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity  # Added this line
 
 load_dotenv()
 
