@@ -13,11 +13,14 @@ async def process_consultation(query: str, is_reading: bool = False, reading_dat
             primary_bits = reading_data["primary_bits"]
             trans_bits = reading_data["transformed_bits"]
             primary_hex = HEXAGRAM_PROFILES[primary_bits]
+            feng_shui_summary = describe_hexagram_feng_shui(primary_hex)
             columns = st.columns(2)
             with columns[0]:
                 st.markdown(render_hexagram_svg(primary_bits, translate("primary_hex", lang)), unsafe_allow_html=True)
                 st.write(f"#{primary_hex['number']} {primary_hex['name_en']}")
                 st.caption(f"{translate('theme_label', lang)}: {primary_hex['theme']}")
+
+                st.caption(feng_shui_summary["summary"])
             if trans_bits:
                 trans_hex = HEXAGRAM_PROFILES[trans_bits]
                 with columns[1]:
@@ -43,8 +46,6 @@ Structure your response with these headers:
                 prompt += f"\nChanging lines: {reading_data['changing_lines']}"
                 prompt += f"\nTransformed Hexagram: #{HEXAGRAM_PROFILES[trans_bits]['number']}"
 
-            # Feng Shui summary
-            feng_shui_summary = describe_hexagram_feng_shui(reading_data)
             prompt += f"\n\nFeng Shui Summary:\n{feng_shui_summary['summary']}"
         else:
             prompt = query
