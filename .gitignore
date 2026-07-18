@@ -30,3 +30,4 @@ history/
 .vscode/
 .idea/
 *.log
+.aider*
