@@ -1,35 +1,29 @@
-import streamlit as st
-import time
-import sys
-import os
 import asyncio
-from dotenv import load_dotenv
-import uuid
 import datetime
+import os
+import sys
+import time
+import uuid
 
-# Fix for import path issues
+import streamlit as st
+from dotenv import load_dotenv
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
-# Load environment variables
 load_dotenv()
 
-from core.iching_core import IChingCore
 from core.ascension_ai import AscensionAI
-from utils.styles import apply_zen_styles, get_element_icon, card_begin, card_end
-from utils.glossary import GLOSSARY, STAGES_EXPLAINED, SCORE_INTERPRETATIONS
-from firebase_config import init_firebase, save_reading, save_feedback, get_user_profile, get_db, get_reading_history
-from enigma_engine import select_hexagram, compute_changing_lines, encode_state_to_bits
-from hexagram_profiles import HEXAGRAM_PROFILES
+from core.iching_core import IChingCore
 from feedback_engine import process_feedback
-from utils.translations import TRANSLATIONS, translate
+from firebase_config import get_reading_history, get_user_profile, init_firebase, save_reading
+from hexagram_profiles import HEXAGRAM_PROFILES
+from utils.glossary import GLOSSARY
+from utils.styles import apply_zen_styles, card_begin, card_end
+from utils.translations import translate
 
-# Page Configuration
-st.set_page_config(page_title="Yi Ching Ascension AI", page_icon="☰", layout="wide")
 
-# Initialize Firebase
+st.set_page_config(page_title="Yi Ching Oracle", page_icon="☰", layout="wide")
 init_firebase()
 
-# Initialize session state
 if "core" not in st.session_state:
     st.session_state.core = IChingCore()
 if "ascension" not in st.session_state:
@@ -45,16 +39,18 @@ if "last_hex_num" not in st.session_state:
 if "lang" not in st.session_state:
     st.session_state.lang = "en"
 
-# Sidebar Navigation
+
 with st.sidebar:
-    st.title(f"📂 {translate('nav_home', st.session_state.lang).split()[1]} Navigation") # Simplified title
+    st.title("Yi Ching")
     lang_options = ["en", "id", "zh"]
-    lang_display = {"en": "English", "id": "Bahasa Indonesia", "zh": "繁體中文"}
-    lang = st.selectbox(f"🌐 {translate('lang_label', st.session_state.lang)}", options=lang_options, format_func=lambda x: lang_display[x], index=lang_options.index(st.session_state.lang))
-    st.session_state.lang = lang
-    
-    st.divider()
-    
+    lang_display = {"en": "English", "id": "Bahasa Indonesia", "zh": "Traditional Chinese"}
+    st.session_state.lang = st.selectbox(
+        translate("lang_label", st.session_state.lang),
+        options=lang_options,
+        format_func=lambda language: lang_display[language],
+        index=lang_options.index(st.session_state.lang),
+    )
+    lang = st.session_state.lang
     menu = st.radio(
         "Menu",
         [
@@ -63,34 +59,26 @@ with st.sidebar:
             translate("nav_history", lang),
             translate("nav_examples", lang),
             translate("nav_how", lang),
-            translate("nav_settings", lang)
+            translate("nav_settings", lang),
         ],
-        label_visibility="collapsed"
+        label_visibility="collapsed",
     )
-    
-    st.divider()
-    st.header(translate("sidebar_header", lang))
-    state = st.session_state.ascension.state
-    st.subheader(f":orange[{state.current_stage}]")
-    st.progress(state.progress_percentage() / 100)
 
-# Helper Functions
-def render_hexagram_svg(bits: str, title: str):
-    # Professional hexagram display
-    svg = f'<svg width="140" height="180" viewBox="0 0 140 180" xmlns="http://www.w3.org/2000/svg" style="background-color: #FCF9F2; border-radius: 12px; border: 1px solid #E8E4D9; padding: 15px;">'
-    svg += f'<text x="70" y="25" font-family=\'Lora\', serif font-size="14" text-anchor="middle" fill="#4A3728" font-weight="600">{title}</text>'
-    for i in range(6):
-        bit = bits[i]
-        y = 150 - (i * 20)
-        if bit == "1": # Yang
-            svg += f'<rect x="25" y="{y}" width="90" height="12" fill="#4A3728" rx="3" />'
-        else: # Yin
-            svg += f'<rect x="25" y="{y}" width="40" height="12" fill="#4A3728" rx="3" />'
-            svg += f'<rect x="75" y="{y}" width="40" height="12" fill="#4A3728" rx="3" />'
-    svg += '</svg>'
-    return svg
 
-async def process_consultation(query, is_enigma=False, enigma_data=None):
+def render_hexagram_svg(bits: str, title: str) -> str:
+    svg = "<svg width='140' height='180' viewBox='0 0 140 180' xmlns='http://www.w3.org/2000/svg' style='background-color:#FCF9F2;border-radius:12px;border:1px solid #E8E4D9;padding:15px;'>"
+    svg += f"<text x='70' y='25' font-family='serif' font-size='14' text-anchor='middle' fill='#4A3728' font-weight='600'>{title}</text>"
+    for index, bit in enumerate(bits):
+        y = 150 - (index * 20)
+        if bit == "1":
+            svg += f"<rect x='25' y='{y}' width='90' height='12' fill='#4A3728' rx='3' />"
+        else:
+            svg += f"<rect x='25' y='{y}' width='40' height='12' fill='#4A3728' rx='3' />"
+            svg += f"<rect x='75' y='{y}' width='40' height='12' fill='#4A3728' rx='3' />"
+    return svg + "</svg>"
+
+
+async def process_consultation(query: str, is_reading: bool = False, reading_data: dict | None = None) -> None:
     st.session_state.messages.append({"role": "user", "content": query})
     with st.chat_message("user"):
         st.markdown(query)
@@ -100,156 +88,147 @@ async def process_consultation(query, is_enigma=False, enigma_data=None):
         full_response = ""
         prefix = ""
         lang = st.session_state.lang
-        
-        if is_enigma and enigma_data:
-            primary_bits = enigma_data['primary_bits']
-            trans_bits = enigma_data['trans_bits']
+
+        if is_reading and reading_data:
+            primary_bits = reading_data["primary_bits"]
+            trans_bits = reading_data["transformed_bits"]
             primary_hex = HEXAGRAM_PROFILES[primary_bits]
-            
-            # Professional Side-by-Side Hexagram Display
-            cols = st.columns(2)
-            with cols[0]:
+            columns = st.columns(2)
+            with columns[0]:
                 st.markdown(render_hexagram_svg(primary_bits, translate("primary_hex", lang)), unsafe_allow_html=True)
-                st.write(f"**#{primary_hex['number']} {primary_hex['name_en']}**")
+                st.write(f"#{primary_hex['number']} {primary_hex['name_en']}")
                 st.caption(f"{translate('theme_label', lang)}: {primary_hex['theme']}")
-            
             if trans_bits:
                 trans_hex = HEXAGRAM_PROFILES[trans_bits]
-                with cols[1]:
+                with columns[1]:
                     st.markdown(render_hexagram_svg(trans_bits, translate("trans_hex", lang)), unsafe_allow_html=True)
-                    st.write(f"**#{trans_hex['number']} {trans_hex['name_en']}**")
-            
-            prefix = f"{translate('state_encoded', lang)}\n\n"
-            
-            # Enforce structured output in the AI prompt
-            lang_map = {"en": "English", "id": "Bahasa Indonesia", "zh": "Traditional Chinese"}
-            target_lang = lang_map.get(lang, "English")
-            
-            query = f"""
-            Please respond in {target_lang}.
-            Provide a structured I Ching Reading for: {query}
-            
-            User State: {enigma_data['state_summary']}
-            Primary Hexagram: #{primary_hex['number']} - {primary_hex['name_en']}
-            
-            Structure your response exactly with these headers:
-            ### 📜 {translate('the_judgment', lang)}
-            ...
-            ### 🖼️ {translate('the_image', lang)}
-            ...
-            ### ⚡ {translate('changing_lines', lang)}
-            ...
-            ### 🧘 {translate('master_strategy', lang)}
-            ...
-            """
-            if trans_bits:
-                query += f"\nTransformed Hexagram: #{HEXAGRAM_PROFILES[trans_bits]['number']}"
+                    st.write(f"#{trans_hex['number']} {trans_hex['name_en']}")
 
-        def on_token(token):
+            prefix = "The coins have been cast.\n\n"
+            language_names = {"en": "English", "id": "Bahasa Indonesia", "zh": "Traditional Chinese"}
+            prompt = f"""
+Please respond in {language_names.get(lang, 'English')}.
+Provide a structured I Ching reading for: {query}
+
+Intention context (it did not determine this cast): {reading_data['intention_summary']}
+Primary Hexagram: #{primary_hex['number']} - {primary_hex['name_en']}
+
+Structure your response with these headers:
+### {translate('the_judgment', lang)}
+### {translate('the_image', lang)}
+### {translate('changing_lines', lang)}
+### {translate('master_strategy', lang)}
+"""
+            if trans_bits:
+                prompt += f"\nChanging lines: {reading_data['changing_lines']}"
+                prompt += f"\nTransformed Hexagram: #{HEXAGRAM_PROFILES[trans_bits]['number']}"
+        else:
+            prompt = query
+
+        def on_token(token: str) -> None:
             nonlocal full_response
             full_response += token
-            element_icon = get_element_icon(st.session_state.ascension.state.elemental_affinity)
-            response_placeholder.markdown(f"<div class='oracle-response'><h3>{element_icon} {translate('oracle_guidance', lang)}</h3>\n\n{prefix}{full_response}▌</div>", unsafe_allow_html=True)
+            response_placeholder.markdown(
+                f"<div class='oracle-response'><h3>{translate('oracle_guidance', lang)}</h3>\n\n{prefix}{full_response}</div>",
+                unsafe_allow_html=True,
+            )
 
-        final_text, breakthrough = await st.session_state.ascension.cultivate(query, on_token=on_token)
-        element_icon = get_element_icon(st.session_state.ascension.state.elemental_affinity)
-        response_placeholder.markdown(f"<div class='oracle-response'><h3>{element_icon} {translate('oracle_guidance', lang)}</h3>\n\n{prefix}{final_text}</div>", unsafe_allow_html=True)
+        final_text = await st.session_state.ascension.respond(prompt, on_token=on_token)
+        response_placeholder.markdown(
+            f"<div class='oracle-response'><h3>{translate('oracle_guidance', lang)}</h3>\n\n{prefix}{final_text}</div>",
+            unsafe_allow_html=True,
+        )
         st.session_state.messages.append({"role": "assistant", "content": final_text})
-        
-        if is_enigma and enigma_data:
+
+        if is_reading and reading_data:
             reading_id = str(uuid.uuid4())
-            st.session_state.last_reading_id, st.session_state.last_hex_num = reading_id, primary_hex['number']
+            st.session_state.last_reading_id = reading_id
+            st.session_state.last_hex_num = primary_hex["number"]
             save_reading({
                 "reading_id": reading_id,
                 "user_id": st.session_state.user_id,
                 "timestamp": time.time(),
-                "hexagram_number": primary_hex['number'],
-                "hexagram_name": primary_hex['name_en'],
+                "hexagram_number": primary_hex["number"],
+                "hexagram_name": primary_hex["name_en"],
                 "oracle_response": final_text,
-                "state_summary": enigma_data['state_summary']
+                "intention_summary": reading_data["intention_summary"],
+                "changing_lines": reading_data["changing_lines"],
             })
 
-# Main Content Logic
+
 apply_zen_styles()
 lang = st.session_state.lang
 
 if menu == translate("nav_home", lang):
     st.title(translate("title", lang))
-    st.markdown(f'<div class="wisdom-text">{translate("subtitle", lang)}</div>', unsafe_allow_html=True)
-    
-    # Journey Summary Card with Real-time metrics
+    st.markdown(f"<div class='wisdom-text'>{translate('subtitle', lang)}</div>", unsafe_allow_html=True)
     history = get_reading_history(st.session_state.user_id, limit=50)
-    readings_count = len(history)
-    
     st.markdown(card_begin(translate("journey_title", lang)), unsafe_allow_html=True)
-    j_col1, j_col2 = st.columns(2)
-    with j_col1:
-        st.write(f"📊 **{translate('readings_count', lang)}**: {readings_count}")
-        st.write(f"✨ **{translate('dominant_element', lang)}**: {get_element_icon(state.elemental_affinity)} {state.elemental_affinity}")
-    with j_col2:
-        st.write(f"🌊 **{translate('current_resonance', lang)}**: {70 + (state.qi_energy % 30):.0f}%")
-        st.write(f"🏆 **{translate('ascension_level', lang)}**: {state.current_stage}")
+    st.write(f"Readings: {len(history)}")
     st.markdown(card_end(), unsafe_allow_html=True)
-
-    # Qi & Karma Gauges
-    st.markdown(card_begin(), unsafe_allow_html=True)
-    col1, col2 = st.columns(2)
-    col1.metric("Qi Energy", f"{state.qi_energy:.1f}")
-    col2.metric("Karma", f"{state.karma_entanglement:.1f}", delta_color="inverse")
-    st.markdown(card_end(), unsafe_allow_html=True)
-    
-    st.info(f"💡 **{translate('daily_tip', lang)}**: {GLOSSARY.get('Wu Wei', 'Patience is the root of wisdom.')}")
+    st.info(f"{translate('daily_tip', lang)}: {GLOSSARY.get('Wu Wei', 'Patience is the root of wisdom.')}")
 
 elif menu == translate("nav_oracle", lang):
     st.title(translate("nav_oracle", lang))
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
-            if message["role"] == "assistant":
-                st.markdown(f'<div class="interpretation">{message["content"]}</div>', unsafe_allow_html=True)
-            else:
-                st.markdown(message["content"])
-    
-    if len(st.session_state.messages) == 0:
+            st.markdown(message["content"])
+
+    if not st.session_state.messages:
         tab1, tab2 = st.tabs([translate("enigma_tab", lang), translate("direct_consult_tab", lang)])
         with tab1:
             st.markdown(card_begin(translate("enigma_tab", lang)), unsafe_allow_html=True)
-            st.write(translate("daily_reflection", lang))
-            c1, c2 = st.columns(2)
-            energy = c1.slider(translate("energy", lang), 1, 5, 3)
-            clarity = c1.slider(translate("clarity", lang), 1, 5, 3)
-            emotional = c1.slider(translate("emotional", lang), 1, 5, 3)
-            social = c2.slider(translate("social", lang), 1, 5, 3)
-            direction = c2.slider(translate("direction", lang), 1, 5, 3)
-            foundation = c2.checkbox(translate("foundation", lang), value=True)
-            q = st.text_area(translate("inquiry_placeholder", lang), key="enigma_q")
-            if st.button(translate("consult_btn", lang), type="primary", use_container_width=True):
-                state_val = {"energy": energy, "clarity": clarity, "emotional": emotional, "social": social, "direction": direction, "foundation": foundation}
-                selected = select_hexagram(state_val, get_user_profile(st.session_state.user_id), [], {"time": time.time(), "streak": 0})
-                asyncio.run(process_consultation(q, is_enigma=True, enigma_data={"primary_bits": selected, "trans_bits": compute_changing_lines(state_val), "state_summary": str(state_val)}))
-            st.markdown(card_end(), unsafe_allow_html=True)
-            
-        with tab2:
-            st.markdown(card_begin(translate("direct_consult_tab", lang)), unsafe_allow_html=True)
-            q_dir = st.text_area(translate("direct_inquiry_placeholder", lang), key="direct_q")
-            if st.button(translate("direct_consult_btn", lang), type="primary", use_container_width=True): 
-                asyncio.run(process_consultation(q_dir))
+            st.write("Optionally set your intention before casting. These answers provide context for the interpretation; they do not determine the hexagram.")
+            left, right = st.columns(2)
+            energy = left.slider(translate("energy", lang), 1, 5, 3)
+            clarity = left.slider(translate("clarity", lang), 1, 5, 3)
+            emotional = left.slider(translate("emotional", lang), 1, 5, 3)
+            social = right.slider(translate("social", lang), 1, 5, 3)
+            direction = right.slider(translate("direction", lang), 1, 5, 3)
+            foundation = right.checkbox(translate("foundation", lang), value=True)
+            question = st.text_area(translate("inquiry_placeholder", lang), key="enigma_q")
+            if st.button("Cast Hexagram", type="primary", use_container_width=True):
+                reflection_state = {
+                    "energy": energy,
+                    "clarity": clarity,
+                    "emotional": emotional,
+                    "social": social,
+                    "direction": direction,
+                    "foundation": foundation,
+                }
+                cast = st.session_state.core.cast_hexagram()
+                asyncio.run(process_consultation(
+                    question,
+                    is_reading=True,
+                    reading_data={
+                        **cast,
+                        "intention_summary": str(reflection_state),
+                    },
+                ))
             st.markdown(card_end(), unsafe_allow_html=True)
 
-    if st.session_state.last_reading_id and len(st.session_state.messages) > 0:
+        with tab2:
+            st.markdown(card_begin(translate("direct_consult_tab", lang)), unsafe_allow_html=True)
+            question = st.text_area(translate("direct_inquiry_placeholder", lang), key="direct_q")
+            if st.button(translate("direct_consult_btn", lang), type="primary", use_container_width=True):
+                asyncio.run(process_consultation(question))
+            st.markdown(card_end(), unsafe_allow_html=True)
+
+    if st.session_state.last_reading_id and st.session_state.messages:
         with st.expander(translate("rate_reading", lang), expanded=True):
             st.write(translate("relevant_q", lang))
-            col_rel1, col_rel2 = st.columns(2)
-            if col_rel1.button(translate("yes", lang), use_container_width=True):
+            yes, no = st.columns(2)
+            if yes.button(translate("yes", lang), use_container_width=True):
                 process_feedback(st.session_state.user_id, st.session_state.last_hex_num, True, 3)
                 st.success(translate("feedback_success", lang))
                 st.session_state.last_reading_id = None
-            if col_rel2.button(translate("not_really", lang), use_container_width=True):
+            if no.button(translate("not_really", lang), use_container_width=True):
                 process_feedback(st.session_state.user_id, st.session_state.last_hex_num, False, 1)
                 st.success(translate("feedback_success", lang))
                 st.session_state.last_reading_id = None
-    
-    if len(st.session_state.messages) > 0:
-        if prompt := st.chat_input(translate("continue_cultivation", lang)): 
+
+    if st.session_state.messages:
+        if prompt := st.chat_input("Continue your consultation..."):
             asyncio.run(process_consultation(prompt))
 
 elif menu == translate("nav_history", lang):
@@ -259,39 +238,30 @@ elif menu == translate("nav_history", lang):
         st.info(translate("no_history", lang))
     else:
         for entry in history:
-            date_str = datetime.datetime.fromtimestamp(entry['timestamp']).strftime('%Y-%m-%d %H:%M')
-            expander_label = translate("history_expander", lang).format(date=date_str, num=entry.get('hexagram_number'))
-            with st.expander(expander_label):
-                st.markdown(f"**{translate('inquiry_placeholder', lang)}**: {entry.get('question', 'Direct Inquiry')}")
-                st.markdown(f'<div class="interpretation">{entry.get("oracle_response", "")}</div>', unsafe_allow_html=True)
+            date = datetime.datetime.fromtimestamp(entry["timestamp"]).strftime("%Y-%m-%d %H:%M")
+            with st.expander(translate("history_expander", lang).format(date=date, num=entry.get("hexagram_number"))):
+                st.markdown(entry.get("oracle_response", ""))
 
 elif menu == translate("nav_examples", lang):
     st.title(translate("nav_examples", lang))
     st.markdown(card_begin(translate("nav_examples", lang)), unsafe_allow_html=True)
     st.write(translate("examples_desc", lang))
-    for bits, data in list(HEXAGRAM_PROFILES.items())[:10]:
-        st.markdown(f'<div class="wisdom-text">**#{data["number"]} {data["name_en"]} ({data["name_zh"]})**: {data["short_meaning"]}</div>', unsafe_allow_html=True)
+    for _, data in list(HEXAGRAM_PROFILES.items())[:10]:
+        st.markdown(f"**#{data['number']} {data['name_en']} ({data['name_zh']})**: {data['short_meaning']}")
     st.markdown(card_end(), unsafe_allow_html=True)
 
 elif menu == translate("nav_how", lang):
     st.title(translate("nav_how", lang))
-    st.markdown(card_begin(), unsafe_allow_html=True)
-    # Load localized user guide if available, else default to English
-    guide_map = {"en": "USER_GUIDE.md", "id": "USER_GUIDE_KIDS_ID.md", "zh": "USER_GUIDE_KIDS_ZH.md"} # Using kids versions for simplicity in this review
-    guide_file = guide_map.get(lang, "USER_GUIDE.md")
+    guide_map = {"en": "USER_GUIDE.md", "id": "USER_GUIDE_KIDS_ID.md", "zh": "USER_GUIDE_KIDS_ZH.md"}
     try:
-        with open(guide_file, "r", encoding="utf-8") as f:
-            st.markdown(f'<div class="wisdom-text">{f.read()}</div>', unsafe_allow_html=True)
-    except:
+        with open(guide_map.get(lang, "USER_GUIDE.md"), "r", encoding="utf-8") as guide:
+            st.markdown(guide.read())
+    except OSError:
         st.error("Guide not found.")
-    st.markdown(card_end(), unsafe_allow_html=True)
 
 elif menu == translate("nav_settings", lang):
     st.title(translate("nav_settings", lang))
-    st.markdown(card_begin(), unsafe_allow_html=True)
-    st.write(f"**{translate('user_id_label', lang)}**: `{st.session_state.user_id}`")
-    if st.button(translate("reset_btn", lang), use_container_width=True):
+    st.write(f"{translate('user_id_label', lang)}: `{st.session_state.user_id}`")
+    if st.button("Clear conversation", use_container_width=True):
         st.session_state.messages = []
-        st.session_state.ascension = AscensionAI()
         st.rerun()
-    st.markdown(card_end(), unsafe_allow_html=True)
