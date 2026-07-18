@@ -35,6 +35,21 @@ class SpiritualState:
         "Great Luo"
     ])
 
+    def progress_percentage(self) -> float:
+        """Return overall cultivation progress as a percentage (0–100)."""
+        total_stages = len(self.stages)
+        if total_stages <= 1:
+            return 100.0
+
+        # On the final stage, progress is complete
+        if self.stage_index >= total_stages - 1:
+            return 100.0
+
+        threshold = 100.0 * (self.stage_index + 1)
+        within = min(1.0, max(0.0, self.dao_comprehension / threshold)) if threshold else 0.0
+        overall = (self.stage_index + within) / (total_stages - 1)
+        return round(min(100.0, max(0.0, overall * 100.0)), 2)
+
 class QuantumEngine:
     @staticmethod
     def quantum_collapse_observation(sentiment: float = 0.0) -> float:
