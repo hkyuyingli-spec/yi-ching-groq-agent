@@ -176,6 +176,6 @@ class AscensionAI:
             {"role": "system", "content": system_message},
             {"role": "user", "content": query},
         ]
-        full_response = await self.groq.get_streaming_response("qwen/qwen3.6-27b", messages, on_token)
+        full_response = await self.groq.get_streaming_response("qwen/qwen3-27b", messages, on_token)
         full_response = re.sub(r"<think>.*?</think>", "", full_response, flags=re.S)
         return full_response
