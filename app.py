@@ -232,9 +232,8 @@ elif menu == translate("nav_oracle", lang):
                 st.success(translate("feedback_success", lang))
                 st.session_state.last_reading_id = None
 
-    if st.session_state.messages:
-        if prompt := st.chat_input("Continue your consultation..."):
-            asyncio.run(process_consultation(prompt))
+    if prompt := st.chat_input("Ask a question or continue your consultation..."):
+        asyncio.run(process_consultation(prompt))
 
 elif menu == translate("nav_history", lang):
     st.title(translate("history_title", lang))
