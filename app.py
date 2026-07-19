@@ -100,8 +100,10 @@ async def process_consultation(query: str, is_reading: bool = False, reading_dat
                 st.write(f"#{primary_hex['number']} {primary_hex['name_en']}")
                 st.caption(f"{translate('theme_label', lang)}: {primary_hex['theme']}")
                 st.caption(feng_shui_summary["summary"])
+            transformed_hex = None
             if trans_bits:
                 trans_hex = HEXAGRAM_PROFILES[trans_bits]
+                transformed_hex = trans_hex
                 with columns[1]:
                     st.markdown(render_hexagram_svg(trans_bits, translate("trans_hex", lang)), unsafe_allow_html=True)
                     st.write(f"#{trans_hex['number']} {trans_hex['name_en']}")
@@ -138,7 +140,15 @@ Structure your response with these headers:
                 unsafe_allow_html=True,
             )
 
-        final_text = await st.session_state.ascension.respond(prompt, on_token=on_token)
+        if is_reading and reading_data:
+            final_text = await st.session_state.ascension.respond_to_reading(
+                primary_hex_number=primary_hex["number"],
+                transformed_hex_number=transformed_hex["number"] if transformed_hex else None,
+                query=prompt,
+                on_token=on_token,
+            )
+        else:
+            final_text = await st.session_state.ascension.respond(prompt, on_token=on_token)
         response_placeholder.markdown(
             f"<div class='oracle-response'><h3>{translate('oracle_guidance', lang)}</h3>\n\n{prefix}{final_text}</div>",
             unsafe_allow_html=True,
