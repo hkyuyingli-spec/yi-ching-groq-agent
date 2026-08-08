@@ -160,14 +160,23 @@ class AscensionAI:
 
         system_message = (
             "You are a careful I Ching interpreter. Base your response on the "
-            "provided reading context and avoid gamified cultivation language."
+            "provided reading context and avoid gamified cultivation language.\n\n"
+            "STRICT FORMAT INSTRUCTIONS:\n"
+            "Structure your response with these exact headers:\n"
+            "### 🎯 Core Directive\n"
+            "(1-2 sentence direct answer)\n\n"
+            "### 📖 Why\n"
+            "(2-3 short bullet points grounded in Judgment/Image/Changing Lines. "
+            "Cap each bullet at 1 concise line - do not expand into paragraphs.)\n\n"
+            "### 🔍 Detailed Classical Analysis\n"
+            "(Full judgment, image, changing lines, and master strategy breakdown)"
             f"\n\nHexagram Grounding:\n{grounding_text}"
         )
         messages = [
             {"role": "system", "content": system_message},
             {"role": "user", "content": query},
         ]
-        full_response = await self.groq.get_streaming_response("qwen/qwen3.6-27b", messages, on_token)
+        full_response = await self.groq.get_streaming_response("openai/gpt-oss-120b", messages, on_token)
         full_response = re.sub(r"<think>.*?</think>", "", full_response, flags=re.S)
         return full_response
 
@@ -176,13 +185,22 @@ class AscensionAI:
         context = self._get_rag_context(query)
         system_message = (
             "You are a careful I Ching interpreter. Base your response on the "
-            "provided reading context and avoid gamified cultivation language."
+            "provided reading context and avoid gamified cultivation language.\n\n"
+            "STRICT FORMAT INSTRUCTIONS:\n"
+            "Structure your response with these exact headers:\n"
+            "### 🎯 Core Directive\n"
+            "(1-2 sentence direct answer)\n\n"
+            "### 📖 Why\n"
+            "(2-3 short bullet points grounded in Judgment/Image/Changing Lines. "
+            "Cap each bullet at 1 concise line - do not expand into paragraphs.)\n\n"
+            "### 🔍 Detailed Classical Analysis\n"
+            "(Full judgment, image, changing lines, and master strategy breakdown)"
             f"\n\nReference Metadata:\n{context}"
         )
         messages = [
             {"role": "system", "content": system_message},
             {"role": "user", "content": query},
         ]
-        full_response = await self.groq.get_streaming_response("qwen/qwen3.6-27b", messages, on_token)
+        full_response = await self.groq.get_streaming_response("openai/gpt-oss-120b", messages, on_token)
         full_response = re.sub(r"<think>.*?</think>", "", full_response, flags=re.S)
         return full_response

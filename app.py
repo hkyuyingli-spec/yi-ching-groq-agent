@@ -19,7 +19,7 @@ from hexagram_profiles import HEXAGRAM_PROFILES
 from utils.glossary import GLOSSARY
 from utils.styles import apply_zen_styles, card_begin, card_end
 from utils.translations import translate
-from core.fengshui import describe_hexagram_feng_shui  # Added this line
+from core.fengshui import describe_hexagram_feng_shui
 
 st.set_page_config(page_title="Yi Ching Oracle", page_icon="☰", layout="wide")
 init_firebase()
@@ -38,31 +38,38 @@ if "last_hex_num" not in st.session_state:
     st.session_state.last_hex_num = None
 if "lang" not in st.session_state:
     st.session_state.lang = "en"
+if "active_reading" not in st.session_state:
+    st.session_state.active_reading = None
+if "suggestion_chips" not in st.session_state:
+    st.session_state.suggestion_chips = []
 
 
-with st.sidebar:
-    st.title("Yi Ching")
-    lang_options = ["en", "id", "zh"]
-    lang_display = {"en": "English", "id": "Bahasa Indonesia", "zh": "Traditional Chinese"}
-    st.session_state.lang = st.selectbox(
-        translate("lang_label", st.session_state.lang),
-        options=lang_options,
-        format_func=lambda language: lang_display[language],
-        index=lang_options.index(st.session_state.lang),
-    )
-    lang = st.session_state.lang
-    menu = st.radio(
-        "Menu",
-        [
-            translate("nav_home", lang),
-            translate("nav_oracle", lang),
-            translate("nav_history", lang),
-            translate("nav_examples", lang),
-            translate("nav_how", lang),
-            translate("nav_settings", lang),
-        ],
-        label_visibility="collapsed",
-    )
+def generate_suggestion_chips(active_reading: dict) -> list[str]:
+    if not active_reading or "primary_hex" not in active_reading:
+        return []
+    p_hex = active_reading["primary_hex"]
+    c_lines = active_reading.get("changing_lines", [])
+
+    chip1 = f"How should I apply the theme of '{p_hex['theme']}' to my situation?"
+    if c_lines:
+        lines_str = ", ".join([str(l) for l in c_lines])
+        chip2 = f"What specific advice do changing line(s) {lines_str} provide?"
+    else:
+        chip2 = f"What specific actions should I avoid under #{p_hex['number']} {p_hex['name_en']}?"
+    chip3 = f"What is the recommended timing and strategy for {p_hex['name_en']}?"
+
+    return [chip1, chip2, chip3]
+
+
+def render_assistant_message(content: str):
+    marker = "### 🔍 Detailed Classical Analysis"
+    if marker in content:
+        parts = content.split(marker, 1)
+        st.markdown(parts[0])
+        with st.expander("Read full classical analysis", expanded=False):
+            st.markdown(marker + parts[1])
+    else:
+        st.markdown(content)
 
 
 def render_hexagram_svg(bits: str, title: str) -> str:
@@ -91,8 +98,20 @@ async def process_consultation(query: str, is_reading: bool = False, reading_dat
 
         if is_reading and reading_data:
             primary_bits = reading_data["primary_bits"]
-            trans_bits = reading_data["transformed_bits"]
+            trans_bits = reading_data.get("transformed_bits")
             primary_hex = HEXAGRAM_PROFILES[primary_bits]
+            trans_hex = HEXAGRAM_PROFILES[trans_bits] if trans_bits else None
+
+            st.session_state.active_reading = {
+                "primary_bits": primary_bits,
+                "transformed_bits": trans_bits,
+                "primary_hex": primary_hex,
+                "transformed_hex": trans_hex,
+                "changing_lines": reading_data.get("changing_lines", []),
+                "intention_summary": reading_data.get("intention_summary", ""),
+            }
+            st.session_state.suggestion_chips = generate_suggestion_chips(st.session_state.active_reading)
+
             feng_shui_summary = describe_hexagram_feng_shui(primary_hex)
             columns = st.columns(2)
             with columns[0]:
@@ -100,10 +119,7 @@ async def process_consultation(query: str, is_reading: bool = False, reading_dat
                 st.write(f"#{primary_hex['number']} {primary_hex['name_en']}")
                 st.caption(f"{translate('theme_label', lang)}: {primary_hex['theme']}")
                 st.caption(feng_shui_summary["summary"])
-            transformed_hex = None
-            if trans_bits:
-                trans_hex = HEXAGRAM_PROFILES[trans_bits]
-                transformed_hex = trans_hex
+            if trans_hex:
                 with columns[1]:
                     st.markdown(render_hexagram_svg(trans_bits, translate("trans_hex", lang)), unsafe_allow_html=True)
                     st.write(f"#{trans_hex['number']} {trans_hex['name_en']}")
@@ -112,22 +128,15 @@ async def process_consultation(query: str, is_reading: bool = False, reading_dat
             language_names = {"en": "English", "id": "Bahasa Indonesia", "zh": "Traditional Chinese"}
             prompt = f"""
 Please respond in {language_names.get(lang, 'English')}.
-Provide a structured I Ching reading for: {query}
+Provide a structured I Ching reading for: {query if query else 'General Guidance'}
 
 Intention context (it did not determine this cast): {reading_data['intention_summary']}
 Primary Hexagram: #{primary_hex['number']} - {primary_hex['name_en']}
-
-Structure your response with these headers:
-### {translate('the_judgment', lang)}
-### {translate('the_image', lang)}
-### {translate('changing_lines', lang)}
-### {translate('master_strategy', lang)}
 """
             if trans_bits:
                 prompt += f"\nChanging lines: {reading_data['changing_lines']}"
-                prompt += f"\nTransformed Hexagram: #{HEXAGRAM_PROFILES[trans_bits]['number']}"
+                prompt += f"\nTransformed Hexagram: #{trans_hex['number']} - {trans_hex['name_en']}"
 
-            # Feng Shui summary
             prompt += f"\n\nFeng Shui Summary:\n{feng_shui_summary['summary']}"
         else:
             prompt = query
@@ -140,20 +149,21 @@ Structure your response with these headers:
                 unsafe_allow_html=True,
             )
 
-        if is_reading and reading_data:
+        active = st.session_state.get("active_reading")
+        if active:
             final_text = await st.session_state.ascension.respond_to_reading(
-                primary_hex_number=primary_hex["number"],
-                transformed_hex_number=transformed_hex["number"] if transformed_hex else None,
+                primary_hex_number=active["primary_hex"]["number"],
+                transformed_hex_number=active["transformed_hex"]["number"] if active.get("transformed_hex") else None,
                 query=prompt,
                 on_token=on_token,
             )
         else:
             final_text = await st.session_state.ascension.respond(prompt, on_token=on_token)
-        response_placeholder.markdown(
-            f"<div class='oracle-response'><h3>{translate('oracle_guidance', lang)}</h3>\n\n{prefix}{final_text}</div>",
-            unsafe_allow_html=True,
-        )
-        st.session_state.messages.append({"role": "assistant", "content": final_text})
+
+        response_placeholder.empty()
+        full_content = f"{prefix}{final_text}"
+        render_assistant_message(full_content)
+        st.session_state.messages.append({"role": "assistant", "content": full_content})
 
         if is_reading and reading_data:
             reading_id = str(uuid.uuid4())
@@ -185,9 +195,22 @@ if menu == translate("nav_home", lang):
 
 elif menu == translate("nav_oracle", lang):
     st.title(translate("nav_oracle", lang))
+
+    if st.session_state.get("active_reading"):
+        active = st.session_state.active_reading
+        p_hex = active["primary_hex"]
+        t_hex = active.get("transformed_hex")
+        banner_md = f"☯ **Active Reading:** #{p_hex['number']} {p_hex['name_en']} ({p_hex['name_zh']}) - *{p_hex['short_meaning']}*"
+        if t_hex:
+            banner_md += f" &nbsp;➔&nbsp; #{t_hex['number']} {t_hex['name_en']} ({t_hex['name_zh']})"
+        st.info(banner_md)
+
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+            if message["role"] == "assistant":
+                render_assistant_message(message["content"])
+            else:
+                st.markdown(message["content"])
 
     if not st.session_state.messages:
         tab1, tab2 = st.tabs([translate("enigma_tab", lang), translate("direct_consult_tab", lang)])
@@ -220,6 +243,7 @@ elif menu == translate("nav_oracle", lang):
                         "intention_summary": str(reflection_state),
                     },
                 ))
+                st.rerun()
             st.markdown(card_end(), unsafe_allow_html=True)
 
         with tab2:
@@ -227,6 +251,7 @@ elif menu == translate("nav_oracle", lang):
             question = st.text_area(translate("direct_inquiry_placeholder", lang), key="direct_q")
             if st.button(translate("direct_consult_btn", lang), type="primary", use_container_width=True):
                 asyncio.run(process_consultation(question))
+                st.rerun()
             st.markdown(card_end(), unsafe_allow_html=True)
 
     if st.session_state.last_reading_id and st.session_state.messages:
@@ -242,8 +267,24 @@ elif menu == translate("nav_oracle", lang):
                 st.success(translate("feedback_success", lang))
                 st.session_state.last_reading_id = None
 
-    if prompt := st.chat_input("Ask a question or continue your consultation..."):
+    if st.session_state.messages and st.session_state.get("suggestion_chips"):
+        st.markdown("##### 💡 Suggested Questions")
+        chip_cols = st.columns(len(st.session_state.suggestion_chips))
+        for idx, chip_text in enumerate(st.session_state.suggestion_chips):
+            with chip_cols[idx]:
+                if st.button(chip_text, key=f"chip_btn_{idx}", use_container_width=True):
+                    asyncio.run(process_consultation(chip_text))
+                    st.rerun()
+
+    input_placeholder = "Ask a question or continue your consultation..."
+    if st.session_state.get("active_reading"):
+        p_name = st.session_state.active_reading["primary_hex"]["name_en"]
+        p_num = st.session_state.active_reading["primary_hex"]["number"]
+        input_placeholder = f"Ask how Hexagram #{p_num} ({p_name}) applies to your situation..."
+
+    if prompt := st.chat_input(input_placeholder):
         asyncio.run(process_consultation(prompt))
+        st.rerun()
 
 elif menu == translate("nav_history", lang):
     st.title(translate("history_title", lang))
@@ -278,4 +319,6 @@ elif menu == translate("nav_settings", lang):
     st.write(f"{translate('user_id_label', lang)}: `{st.session_state.user_id}`")
     if st.button("Clear conversation", use_container_width=True):
         st.session_state.messages = []
+        st.session_state.active_reading = None
+        st.session_state.suggestion_chips = []
         st.rerun()
